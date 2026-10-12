@@ -732,7 +732,7 @@
       .hero__aside { position: static; width: 100%; max-width: 420px; }
       .manifesto__row, .signature__row, .ritual__intro { grid-template-columns: 1fr; }
       .manifesto__stats { margin-left: 0; }
-      .signature__sticky { position: relative; top: auto; max-width: 420px; max-height: 480px; }
+      .signature__sticky { position: relative; top: auto; max-width: 480px; max-height: 520px; }
       .products-grid { grid-template-columns: repeat(2, 1fr); }
       .masonry { grid-template-columns: repeat(2, 1fr); }
       .articles { grid-template-columns: 1fr 1fr; }
@@ -795,6 +795,24 @@
       }
       .manifesto__stats { grid-template-columns: 1fr; gap: 24px; }
       .signature__title { font-size: clamp(36px, 10vw, 56px); }
+      /* Signature / philosophy product image — shorter on mobile */
+      .signature__sticky {
+        position: relative;
+        top: auto;
+        width: 100%;
+        max-width: none;
+        max-height: none;
+        aspect-ratio: 5 / 4;
+        margin-bottom: 24px;
+        border-radius: 0;
+      }
+      .signature__sticky img {
+        transform: none;
+        object-fit: cover;
+        object-position: center 40%;
+      }
+      .signature__eyebrow { margin-bottom: 16px; }
+      .signature__desc { margin-bottom: 28px; }
       .collection__title, .bestsellers__title, .ritual__title, .reviews__title, .journal__title {
         font-size: clamp(36px, 10vw, 56px);
       }
