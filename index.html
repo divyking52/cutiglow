@@ -3,1741 +3,1840 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cutiglow — Transforming Lives Through Beauty</title>
+  <title>Cutiglow — Reveal Your Skin’s Natural Radiance</title>
+  <meta name="description" content="Dermatologically tested hair, skin and sun care from Koramangala, Bengaluru. Transforming lives through beauty." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,200;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Staatliches&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #1a1a1a;
-      --muted: #8c8a86;
-      --body: #4a4845;
-      --dim: #b5b1aa;
-      --cream: #f7f6f3;
+      --cream: #f5f1e8;
+      --cream-deep: #ebe6dc;
+      --ink: #0a0a0a;
+      --ink-soft: #3a3835;
+      --muted: #706f6f;
       --white: #ffffff;
-      --hairline: #e8e6e1;
-      --pad: clamp(16px, 4.2vw, 80px);
-      --max: 1312px;
+      --line: rgba(10, 10, 10, 0.12);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --pad: clamp(20px, 3.2vw, 32px);
+      --max: 1092px;
+      --nav-h: 74px;
+      --btn-r: 8px;
     }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: auto; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
     body {
-      font-family: "Hanken Grotesk", sans-serif;
-      background: var(--white); color: var(--ink);
-      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+      font-family: "Satoshi", system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
+    img, video { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
-    .sec-label {
-      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
-    }
-    .sec-label span { color: var(--muted); font-family: "Newsreader", serif; letter-spacing: normal; text-transform: none; margin-right: 8px; }
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
-      will-change: opacity, transform;
-    }
-    .reveal.is-in { opacity: 1; transform: translateY(0); }
-    .reveal.is-out {
-      opacity: 0; transform: translateY(-18px);
-    }
+    ul { list-style: none; }
 
-    /* INTRO */
-    .intro {
-      position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 28px; background: var(--cream);
-      transition: opacity .7s ease, visibility .7s ease;
+    .wrap { width: min(100% - 2 * var(--pad), var(--max)); margin-inline: auto; }
+    .eyebrow {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      font-size: 14px; font-weight: 400; letter-spacing: 0.01em;
+      text-transform: none; color: var(--muted);
+      margin-bottom: 18px;
     }
-    .intro.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
-    .intro__label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-    .intro__brand {
-      font-family: "Newsreader", serif; font-size: clamp(48px, 8vw, 96px); font-weight: 400;
-      letter-spacing: -.04em; position: relative; overflow: hidden;
+    .eyebrow::before, .eyebrow::after {
+      content: "";
+      width: 52px; height: 1px;
+      background: rgba(10, 10, 10, 0.3);
+      position: relative;
     }
-    .intro__brand-text { display: inline-block; animation: brandReveal 1.4s cubic-bezier(.22,1,.36,1) forwards; }
-    .intro__brand-blur {
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 0%, var(--cream) 55%, var(--cream) 100%);
-      animation: blurWipe 1.4s cubic-bezier(.22,1,.36,1) forwards; pointer-events: none;
+    .eyebrow::before {
+      /* line + dot on the right (toward text) */
+      background:
+        radial-gradient(circle at right center, rgba(10,10,10,.45) 0 2.5px, transparent 2.7px) right center / 6px 6px no-repeat,
+        linear-gradient(90deg, rgba(10,10,10,.3), rgba(10,10,10,.3)) left center / calc(100% - 4px) 1px no-repeat;
     }
-    .intro__bar { width: 120px; height: 1px; background: rgba(26,26,26,.12); position: relative; overflow: hidden; }
-    .intro__bar-fill { position: absolute; inset: 0; background: var(--ink); transform-origin: left; animation: loadBar 1.6s cubic-bezier(.65,0,.35,1) forwards; }
-    @keyframes brandReveal { from { filter: blur(12px); opacity: .35; transform: translateX(-8px); } to { filter: blur(0); opacity: 1; transform: none; } }
-    @keyframes blurWipe { from { transform: none; opacity: 1; } to { transform: translateX(110%); opacity: 0; } }
-    @keyframes loadBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .eyebrow::after {
+      /* dot on the left (toward text) + line */
+      background:
+        radial-gradient(circle at left center, rgba(10,10,10,.45) 0 2.5px, transparent 2.7px) left center / 6px 6px no-repeat,
+        linear-gradient(90deg, rgba(10,10,10,.3), rgba(10,10,10,.3)) right center / calc(100% - 4px) 1px no-repeat;
+    }
+    .section-title {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 48px;
+    }
+    .section { padding: clamp(72px, 9vw, 112px) 0; }
 
-    /* ANNOUNCE + NAV */
-    .announce {
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
-      min-height: 37px; padding: 10px 40px;
+    /* NAV — Skinbllis template bar */
+    .nav {
+      position: fixed; inset: 0 0 auto; z-index: 100;
+      display: flex; justify-content: center;
+      padding: 8px 32px;
+      pointer-events: none;
+      transition: background .35s ease, backdrop-filter .35s ease, box-shadow .35s ease;
     }
-    .announce__item { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-    .announce__item--left { justify-self: start; }
-    .announce__item--center { justify-self: center; }
-    .announce__item--right { justify-self: end; }
-    .nav-wrap {
-      position: sticky; top: 0; z-index: 50; display: flex; justify-content: center;
-      padding: 16px var(--pad) 0; pointer-events: none;
+    .nav.is-scrolled {
+      background: rgba(245, 241, 232, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 var(--line);
     }
-    .nav__pill {
-      pointer-events: auto; display: flex; align-items: center; gap: 8px;
-      padding: 8px 8px 8px 28px; background: rgba(255,255,255,.55);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 999px;
-      box-shadow: rgba(26,20,15,.08) 0 12px 20px, rgba(255,255,255,.9) 0 1px 1px inset;
+    .nav.is-hero { color: var(--white); }
+    .nav.is-hero.is-scrolled { color: var(--ink); }
+    .nav__bar {
+      pointer-events: auto;
+      width: min(100%, var(--max));
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; padding: 8px 14px; min-height: 58px;
     }
-    .nav__brand { font-family: "Newsreader", serif; font-size: 24px; margin-right: 28px; letter-spacing: -.02em; }
-    .nav__links { display: flex; gap: 28px; list-style: none; }
-    .nav__links a { font-size: 14px; transition: opacity .2s; }
-    .nav__links a:hover { opacity: .55; }
-    .nav__actions { display: flex; align-items: center; gap: 4px; margin-left: 20px; }
-    .nav__search, .nav__toggle { width: 38px; height: 38px; border-radius: 999px; display: grid; place-items: center; }
-    .nav__toggle { display: none; }
-    .nav__contact { padding: 11px 18px; background: var(--ink); color: #fff !important; border-radius: 999px; font-size: 13px; }
+    .nav__brand {
+      font-family: "Staatliches", sans-serif;
+      font-size: 24px; font-weight: 400; letter-spacing: 0.02em;
+      text-transform: uppercase; line-height: 1; flex-shrink: 0;
+      min-width: 120px;
+    }
+    .nav__links {
+      display: flex; align-items: center; justify-content: center;
+      gap: 24px; flex: 1;
+    }
+    .nav__links a {
+      font-size: 14px; font-weight: 500; line-height: 1;
+      position: relative; padding: 6px 0;
+      transition: opacity .2s ease;
+    }
+    .nav__links a:hover { opacity: .65; }
+    .nav__cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 42px; padding: 8px 14px; border-radius: var(--btn-r);
+      background: var(--ink); color: var(--white) !important;
+      font-size: 13px; font-weight: 500; flex-shrink: 0;
+      transition: transform .2s ease, opacity .2s ease, background .2s ease;
+    }
+    .nav.is-hero:not(.is-scrolled) .nav__cta {
+      background: var(--white); color: var(--ink) !important;
+    }
+    .nav__cta:hover { transform: translateY(-1px); opacity: .92; }
+    .nav__toggle {
+      display: none; width: 42px; height: 42px; border-radius: var(--btn-r);
+      border: 1px solid currentColor; place-items: center; flex-shrink: 0;
+    }
 
     /* HERO */
     .hero {
-      position: relative; padding: 0 var(--pad) 0; margin-top: -73px; padding-top: 89px;
-      opacity: 0; transform: translateY(12px); transition: opacity .9s ease .1s, transform .9s ease .1s;
+      position: relative; min-height: 100svh;
+      display: grid; align-items: end;
+      color: var(--white); background: #050505;
+      overflow: hidden;
     }
-    .hero.is-ready { opacity: 1; transform: none; }
-    .hero__copy { position: relative; max-width: var(--max); margin: 0 auto; min-height: clamp(160px, 22vw, 260px); padding-top: 8px; }
-    .hero__main { padding-right: clamp(0px, 18vw, 340px); }
-    .hero__eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; }
-    .hero__title {
-      font-family: "Newsreader", serif; font-weight: 400;
-      font-size: clamp(56px, 9.6vw, 184px); line-height: .88; letter-spacing: -.05em;
-    }
-    .hero__title-line { display: block; }
-    .hero__title .word { display: inline-block; opacity: 0; filter: blur(10px); transform: translateY(18px); }
-    .hero.is-ready .hero__title .word { animation: wordIn .9s cubic-bezier(.22,1,.36,1) forwards; }
-    .hero__title-line--italic { font-style: italic; }
-    .hero__aside {
-      position: absolute; top: 46px; right: 0; width: min(310px, 28vw);
-      opacity: 0; transform: translateY(16px); transition: opacity .8s ease .45s, transform .8s ease .45s;
-    }
-    .hero.is-ready .hero__aside { opacity: 1; transform: none; }
-    .hero__desc { font-size: clamp(15px, 1.05vw, 18px); line-height: 1.6; color: var(--body); margin-bottom: 28px; }
-    .hero__cta, .btn {
-      display: inline-flex; align-items: center; gap: 10px; padding: 17px 30px;
-      background: var(--ink); color: #fff; border-radius: 999px; font-size: 14px;
-      transition: opacity .2s, transform .25s;
-    }
-    .hero__cta:hover, .btn:hover { opacity: .88; transform: translateY(-1px); }
-    .hero__cta svg, .btn svg { width: 18px; height: 18px; }
-    @keyframes wordIn { to { opacity: 1; filter: blur(0); transform: none; } }
     .hero__media {
-      position: relative; max-width: 1425px; margin: clamp(36px, 4vw, 56px) auto 0;
-      opacity: 0; transform: translateY(28px) scale(.985);
-      transition: opacity 1s ease .35s, transform 1s cubic-bezier(.22,1,.36,1) .35s;
+      position: absolute; inset: 0;
+      will-change: transform;
+      transform: scale(1.12);
+      transform-origin: center center;
     }
-    .hero.is-ready .hero__media { opacity: 1; transform: none; }
-    .hero__image-wrap { position: relative; aspect-ratio: 1425/695; overflow: hidden; background: #1a1218; }
-    .hero__image-parallax { width: 100%; height: 100%; will-change: transform; transform: scale(1.12); }
-    .hero__image-parallax img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
-    .hero__caption {
-      position: absolute; left: clamp(16px, 2.2vw, 35px); bottom: clamp(16px, 2.2vw, 35px);
-      display: inline-flex; align-items: baseline; gap: 16px; padding: 12px 20px;
-      background: rgba(255,255,255,.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.9); border-radius: 999px;
+    .hero__media video,
+    .hero__media img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: 72% center;
     }
-    .hero__caption-name { font-family: "Newsreader", serif; font-size: 16px; font-weight: 300; white-space: nowrap; }
-    .hero__caption-meta { font-size: 13px; color: var(--body); white-space: nowrap; }
-    .hero__scroll {
-      position: absolute; right: clamp(16px, 2.5vw, 48px); bottom: clamp(20px, 3vw, 48px);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    .hero__media video {
+      opacity: 0; transition: opacity .8s ease;
     }
-    .hero__scroll-label { font-size: 9px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
-    .hero__scroll-line { width: 1px; height: 43px; background: var(--ink); transform-origin: top; animation: scrollPulse 2.2s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(.55); opacity: .4; } }
-
-    /* MANIFESTO */
-    .manifesto { padding: clamp(56px, 7vw, 100px) 0 clamp(48px, 6vw, 80px); }
-    .manifesto__row {
-      display: grid; grid-template-columns: minmax(180px, 340px) minmax(0, 900px);
-      gap: clamp(24px, 4vw, 48px); align-items: start;
+    .hero__media video.is-ready { opacity: 1; }
+    .hero__shade {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.35) 48%, rgba(0,0,0,.15) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 28%, rgba(0,0,0,.55) 100%);
+      will-change: opacity;
     }
-    .manifesto__label { display: flex; align-items: baseline; gap: 10px; padding-top: 8px; }
-    .manifesto__num { font-family: "Newsreader", serif; font-size: 14px; color: var(--muted); }
-    .manifesto__tag { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
-    .manifesto__reveal {
-      font-family: "Newsreader", serif; font-size: clamp(28px, 3.2vw, 56px);
-      font-weight: 200; letter-spacing: -.02em; line-height: 1.18;
+    .hero__content {
+      position: relative; z-index: 2;
+      width: min(100% - 2 * var(--pad), var(--max));
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 40px) 0 82px;
+      max-width: 650px;
+      margin-left: max(var(--pad), calc((100% - var(--max)) / 2));
+      will-change: transform, opacity;
     }
-    .manifesto__reveal .rw { color: var(--dim); transition: color .15s linear; }
-    .manifesto__reveal .rw.is-on { color: var(--ink); }
-    .manifesto__reveal .rw.is-mid { color: #5a5855; }
-    .manifesto__stats {
-      display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 80px);
-      margin-top: clamp(40px, 5vw, 64px); margin-left: clamp(0px, 22.5%, 340px);
-    }
-    .stat__value { font-family: "Newsreader", serif; font-size: clamp(36px, 3vw, 48px); letter-spacing: -.02em; }
-    .stat__label { margin-top: 6px; font-size: 13px; color: var(--muted); }
-
-    /* SIGNATURE */
-    .signature { padding: 0 0 clamp(48px, 6vw, 88px); }
-    .signature__row {
-      display: grid; grid-template-columns: minmax(280px, 640px) minmax(280px, 552px);
-      gap: clamp(32px, 5vw, 120px); align-items: start;
-    }
-    .signature__sticky { position: sticky; top: 110px; aspect-ratio: 4/5; max-height: min(560px, 72vh); overflow: hidden; background: var(--cream); }
-    .signature__sticky img { width: 100%; height: 100%; object-fit: cover; will-change: transform; transform: scale(1.06); }
-    .signature__eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 28px; }
-    .signature__title {
-      font-family: "Newsreader", serif; font-size: clamp(56px, 6.5vw, 120px);
-      line-height: .92; letter-spacing: -.04em; margin-bottom: 28px;
-    }
-    .signature__desc { font-size: clamp(15px, 1.05vw, 18px); line-height: 1.6; color: var(--body); max-width: 480px; margin-bottom: 48px; }
-    .benefit {
-      display: grid; grid-template-columns: 36px minmax(140px, 1fr) minmax(140px, 1fr);
-      gap: 8px 16px; padding: 22px 0; border-top: 1px solid var(--hairline); align-items: start;
-    }
-    .benefit:last-child { border-bottom: 1px solid var(--hairline); }
-    .benefit__num { font-family: "Newsreader", serif; font-size: 14px; color: var(--muted); }
-    .benefit__head { font-family: "Newsreader", serif; font-size: clamp(22px, 1.6vw, 28px); letter-spacing: -.005em; }
-    .benefit__body { font-size: 14px; line-height: 1.55; color: var(--body); }
-    .specs { margin-top: 48px; }
-    .specs__title { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-    .specs__row {
-      display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; padding: 10px 0;
-      border-top: 1px solid var(--hairline); font-size: 13px;
-    }
-    .specs__row:last-child { border-bottom: 1px solid var(--hairline); }
-    .specs__key { color: var(--muted); }
-    .signature__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 36px; }
-    .signature__link { font-size: 13px; color: var(--muted); border-bottom: 1px solid transparent; }
-    .signature__link:hover { color: var(--ink); border-color: var(--ink); }
-
-    /* COLLECTION */
-    .collection { padding: clamp(40px, 5vw, 72px) 0; }
-    .collection__head {
-      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 48px;
-    }
-    .collection__title {
-      font-family: "Newsreader", serif; font-size: clamp(40px, 5vw, 72px); line-height: 1; letter-spacing: -.03em;
-    }
-    .collection__title em { font-style: italic; color: var(--muted); font-weight: 300; }
-    .collection__view { font-size: 14px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-    .collection__view:hover { opacity: .6; }
-    .index-table { width: 100%; border-collapse: collapse; }
-    .index-table thead th {
-      text-align: left; font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--muted); font-weight: 400; padding: 0 12px 16px; border-bottom: 1px solid var(--hairline);
-    }
-    .index-table tbody tr {
-      position: relative; border-bottom: 1px solid var(--hairline); cursor: pointer;
-      transition: background .3s ease;
-    }
-    .index-table tbody tr:hover { background: rgba(247,246,243,.85); }
-    .index-table td { padding: 22px 12px; vertical-align: middle; }
-    .index-table .col-no {
-      width: 64px; color: var(--muted); font-family: "Newsreader", serif;
-      font-size: 14px; font-weight: 300;
-    }
-    .index-table .col-name {
-      position: relative;
-      font-family: "Newsreader", serif;
-      font-size: clamp(24px, 2.2vw, 40px);
-      font-weight: 200;
-      letter-spacing: -.015em;
-      line-height: 1.15;
-    }
-    /* Dual-layer name: roman → italic on hover (Ondine) */
-    .index-table .col-name__text {
-      position: relative;
+    .hero__label {
       display: inline-block;
+      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,.72); margin-bottom: 18px;
+      animation: fadeUp .8s .15s ease both;
     }
-    .index-table .col-name__roman,
-    .index-table .col-name__italic {
-      display: inline-block;
-      transition: opacity .35s ease, transform .35s cubic-bezier(.22,1,.36,1);
+    .hero__title {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(40px, 5.2vw, 62px);
+      font-weight: 600; letter-spacing: -0.02em; line-height: 1;
+      margin-bottom: 18px;
+      animation: fadeUp .9s .28s ease both;
     }
-    .index-table .col-name__roman {
-      font-style: normal;
-      opacity: 1;
+    .hero__title em { font-style: italic; font-weight: 500; }
+    .hero__desc {
+      font-size: 16px; line-height: 1.65;
+      color: rgba(255,255,255,.78); max-width: 42ch; margin-bottom: 28px;
+      animation: fadeUp .9s .42s ease both;
     }
-    .index-table .col-name__italic {
-      position: absolute;
-      left: 0; top: 0;
-      font-style: italic;
-      opacity: 0;
-      transform: translateY(2px);
-      pointer-events: none;
-      white-space: nowrap;
+    .hero__actions {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      animation: fadeUp .9s .55s ease both;
     }
-    .index-table tbody tr:hover .col-name__roman {
-      opacity: 0;
-      transform: translateY(-2px);
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 42px; padding: 8px 22px; border-radius: var(--btn-r);
+      font-size: 14px; font-weight: 500;
+      transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
     }
-    .index-table tbody tr:hover .col-name__italic {
-      opacity: 1;
-      transform: translateY(0);
+    .btn:hover { transform: translateY(-1px); }
+    .btn--light { background: var(--white); color: var(--ink); padding-inline: 14px; }
+    .btn--ghost {
+      background: rgb(112, 111, 111); color: var(--white);
+      border: 1px solid transparent; padding-inline: 22px;
     }
-    .index-table .col-type, .index-table .col-size { font-size: 14px; color: var(--muted); }
-    .index-table .col-price {
-      font-family: "Hanken Grotesk", sans-serif;
-      font-size: 16px; text-align: right; color: var(--ink);
+    .btn--ghost:hover { border-color: var(--white); }
+    .btn--dark { background: var(--ink); color: var(--white); }
+    .btn--outline {
+      background: transparent; color: var(--ink);
+      border: 1px solid var(--ink);
     }
-    .index-hover {
-      position: absolute; left: 18%; top: 50%; transform: translateY(-50%) scale(.92);
-      width: 140px; height: 180px; border-radius: 4px; overflow: hidden; opacity: 0;
-      pointer-events: none; z-index: 2; box-shadow: 0 20px 40px rgba(26,20,15,.18);
-      transition: opacity .3s ease, transform .35s cubic-bezier(.22,1,.36,1);
-    }
-    .index-table tbody tr:hover .index-hover { opacity: 1; transform: translateY(-50%) scale(1); }
-    .index-hover img { width: 100%; height: 100%; object-fit: cover; }
+    .btn svg { width: 16px; height: 16px; }
 
-    /* BESTSELLERS */
-    .bestsellers { padding: clamp(32px, 4vw, 64px) 0 clamp(48px, 6vw, 88px); }
-    .bestsellers__head {
-      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-      gap: 20px; margin-bottom: 28px;
-    }
-    .bestsellers__title {
-      font-family: "Newsreader", serif; font-size: clamp(36px, 4.5vw, 64px); letter-spacing: -.03em;
-    }
-    .bestsellers__title em {
-      font-style: italic; color: var(--muted); font-weight: 300;
-    }
-    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter-tab {
-      padding: 10px 18px; border-radius: 999px; font-size: 13px; color: var(--body);
-      border: 1px solid transparent; transition: background .25s, color .25s, border-color .25s;
-    }
-    .filter-tab.is-active { background: var(--ink); color: #fff; }
-    .filter-tab:not(.is-active):hover { border-color: var(--hairline); }
-    .products-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-    }
-    .pcard {
-      display: block; opacity: 0; transform: translateY(24px);
-      transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
-      will-change: opacity, transform;
-    }
-    .pcard.is-in { opacity: 1; transform: none; }
-    .pcard.is-out { opacity: 0; transform: translateY(-14px); }
-    .pcard.is-hidden { display: none !important; }
-    .pcard__media {
-      position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--cream); margin-bottom: 12px;
-    }
-    .pcard__media img {
-      width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22,1,.36,1);
-    }
-    .pcard:hover .pcard__media img { transform: scale(1.05); }
-    .pcard__pill {
-      position: absolute; left: 12px; bottom: 12px; padding: 7px 12px;
-      background: rgba(255,255,255,.7); backdrop-filter: blur(8px); border-radius: 999px; font-size: 12px;
-      opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s;
-    }
-    .pcard:hover .pcard__pill { opacity: 1; transform: none; }
-    .pcard__eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-    .pcard__row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-    .pcard__name { font-family: "Newsreader", serif; font-size: 20px; letter-spacing: -.02em; }
-    .pcard__price { font-family: "Newsreader", serif; font-size: 16px; }
-    .pcard__meta { margin-top: 4px; font-size: 12px; color: var(--muted); }
-
-    /* RITUAL — desktop sticky stack */
-    .ritual {
-      background: var(--cream); padding: clamp(48px, 6vw, 88px) 0;
-    }
-    .ritual__intro {
-      display: grid; grid-template-columns: 1fr minmax(200px, 280px);
-      gap: 32px; align-items: end; margin-bottom: clamp(28px, 4vw, 48px);
-    }
-    .ritual__title {
-      font-family: "Newsreader", serif; font-size: clamp(40px, 5vw, 72px);
-      line-height: .95; letter-spacing: -.035em;
-    }
-    .ritual__title em { font-style: italic; color: var(--muted); font-weight: 300; }
-    .ritual__aside { font-size: 15px; line-height: 1.5; color: var(--body); padding-bottom: 6px; }
-    .ritual-stack { position: relative; }
-    .ritual-card {
-      position: sticky;
-      display: grid;
-      grid-template-columns: minmax(240px, 560px) 1fr;
-      gap: clamp(24px, 4vw, 64px);
-      align-items: stretch;
-      height: min(560px, 72vh);
-      margin-bottom: 48px;
-      background: var(--cream);
+    /* MARQUEE */
+    .marquee {
+      padding: 22px 0; background: var(--cream);
+      border-bottom: 1px solid var(--line);
       overflow: hidden;
     }
-    .ritual-card:nth-child(1) { top: 110px; z-index: 1; }
-    .ritual-card:nth-child(2) { top: 150px; z-index: 2; }
-    .ritual-card:nth-child(3) { top: 190px; z-index: 3; margin-bottom: 0; }
-    .ritual-card__img { overflow: hidden; background: #ddd; }
-    .ritual-card__img img {
-      width: 100%; height: 100%; object-fit: cover; will-change: transform;
+    .marquee__track {
+      display: flex; gap: 12px; width: max-content;
+      animation: marquee 42s linear infinite;
     }
-    .ritual-card__body {
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: clamp(20px, 3vw, 40px) clamp(8px, 2vw, 24px) clamp(20px, 3vw, 40px) 0;
+    .marquee__item {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 18px; border-radius: 999px;
+      background: var(--white); border: 1px solid var(--line);
+      font-size: 14px; font-weight: 500; white-space: nowrap;
     }
-    .ritual-card__top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; }
-    .ritual-card__roman {
-      font-family: "Newsreader", serif; font-size: clamp(28px, 2.5vw, 40px); letter-spacing: -.02em;
+    .marquee__item::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink);
     }
-    .ritual-card__roman span { color: var(--muted); margin: 0 8px; }
-    .ritual-card__n { font-family: "Newsreader", serif; font-size: 14px; color: var(--muted); }
-    .ritual-card__step { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-    .ritual-card__name {
-      font-family: "Newsreader", serif; font-size: clamp(40px, 4.5vw, 72px);
-      line-height: .95; letter-spacing: -.03em; margin-bottom: 16px;
-    }
-    .ritual-card__desc {
-      font-size: 16px; line-height: 1.6; color: var(--body);
-      max-width: 360px; margin-bottom: 28px;
-    }
-    .ritual-card__product {
-      display: inline-flex; align-items: center; gap: 14px; padding: 8px;
-      background: rgba(255,255,255,.65); backdrop-filter: blur(8px); border-radius: 999px;
-      width: fit-content;
-    }
-    .ritual-card__product img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
-    .ritual-card__product span { font-size: 14px; padding-right: 14px; }
-    .ritual-card__product em { font-style: normal; color: var(--muted); margin-left: 8px; font-size: 13px; }
 
-    /* PROOF / ODOMETER */
-    .proof { padding: clamp(48px, 6vw, 88px) 0; }
-    .proof__label { margin-bottom: 12px; color: var(--muted); }
-    .proof__sub { font-size: 15px; color: var(--body); margin-bottom: 36px; }
-    .counters {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    /* ABOUT — framed media with overlay stats */
+    .about .section-title { margin-bottom: 36px; font-weight: 600; }
+    .about__card {
+      background: var(--white);
+      border-radius: 32px;
+      padding: 12px;
+      box-shadow: 0 12px 40px rgba(10, 10, 10, 0.05);
     }
-    .counter__value {
-      font-family: "Newsreader", serif; font-size: clamp(48px, 5.5vw, 88px);
-      letter-spacing: -.04em; line-height: 1; margin-bottom: 12px;
-    }
-    .counter__label { font-size: 14px; color: var(--muted); max-width: 200px; }
-
-    /* INGREDIENTS — full-bleed image, glass card bottom-left (Ondine placement) */
-    .ingredients {
+    .about__media {
       position: relative;
-      height: clamp(420px, 48vw, 560px);
+      border-radius: 22px;
       overflow: hidden;
+      aspect-ratio: 16 / 9.2;
+      background: #1a1512;
     }
-    .ingredients__bg {
-      position: absolute; inset: 0; will-change: transform;
+    .about__media img, .about__media video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
     }
-    .ingredients__bg img {
-      width: 100%; height: 120%; object-fit: cover; object-position: center 45%;
-    }
-    /* Progressive blur strips behind glass (bottom-left) */
-    .ingredients__prog {
-      position: absolute;
-      left: 0; bottom: 0;
-      width: min(480px, 52vw);
-      height: min(360px, 70%);
+    .about__media video { opacity: 0; transition: opacity .8s ease; }
+    .about__media video.is-ready { opacity: 1; }
+    .about__media::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0) 42%,
+        rgba(0,0,0,.45) 72%,
+        rgba(0,0,0,.72) 100%
+      );
       pointer-events: none; z-index: 1;
     }
-    .ingredients__prog span {
-      position: absolute; inset: 0;
-      -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
-      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    .about__stats {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: clamp(20px, 3.5vw, 36px) clamp(16px, 3vw, 40px) clamp(22px, 3.5vw, 34px);
     }
-    .ingredients__prog span:nth-child(1) {
-      backdrop-filter: blur(1.4px); -webkit-backdrop-filter: blur(1.4px);
-      -webkit-mask-image: linear-gradient(to top, #000 83.33%, transparent 100%);
-      mask-image: linear-gradient(to top, #000 83.33%, transparent 100%);
+    .stat { text-align: center; color: var(--white); }
+    .stat__value {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1;
+      margin-bottom: 8px; color: var(--white);
     }
-    .ingredients__prog span:nth-child(2) {
-      backdrop-filter: blur(2.8px); -webkit-backdrop-filter: blur(2.8px);
-      -webkit-mask-image: linear-gradient(to top, #000 66.67%, transparent 83.33%);
-      mask-image: linear-gradient(to top, #000 66.67%, transparent 83.33%);
+    .stat__label {
+      font-size: clamp(12px, 1.1vw, 15px);
+      font-weight: 400; color: rgba(255,255,255,.92);
     }
-    .ingredients__prog span:nth-child(3) {
-      backdrop-filter: blur(5.6px); -webkit-backdrop-filter: blur(5.6px);
-      -webkit-mask-image: linear-gradient(to top, #000 50%, transparent 66.67%);
-      mask-image: linear-gradient(to top, #000 50%, transparent 66.67%);
+
+    /* PRODUCTS — text top, image bottom (template) */
+    .products { background: var(--cream); }
+    .products .section-title { margin-bottom: 40px; font-weight: 600; }
+    .products__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      margin-bottom: 40px;
     }
-    .ingredients__prog span:nth-child(4) {
-      backdrop-filter: blur(11.2px); -webkit-backdrop-filter: blur(11.2px);
-      -webkit-mask-image: linear-gradient(to top, #000 33.33%, transparent 50%);
-      mask-image: linear-gradient(to top, #000 33.33%, transparent 50%);
-    }
-    .ingredients__prog span:nth-child(5) {
-      backdrop-filter: blur(22.4px); -webkit-backdrop-filter: blur(22.4px);
-      -webkit-mask-image: linear-gradient(to top, #000 16.67%, transparent 33.33%);
-      mask-image: linear-gradient(to top, #000 16.67%, transparent 33.33%);
-    }
-    .ingredients__prog span:nth-child(6) {
-      backdrop-filter: blur(44.8px); -webkit-backdrop-filter: blur(44.8px);
-      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 16.67%);
-      mask-image: linear-gradient(to top, #000 0%, transparent 16.67%);
-    }
-    .ingredients__glass {
-      position: absolute;
-      left: clamp(16px, 3.4vw, 64px);
-      bottom: clamp(16px, 2vw, 32px);
-      z-index: 2;
-      width: min(420px, calc(100% - 32px));
-      padding: 28px;
+    .pcard {
+      display: flex; flex-direction: column;
+      background: var(--white);
       border-radius: 24px;
-      background: rgba(255,255,255,.5);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,.65);
+      overflow: hidden;
+      padding: 18px 18px 14px;
+      transition:
+        opacity 1.15s cubic-bezier(.16, 1, .3, 1),
+        transform 1.25s cubic-bezier(.16, 1, .3, 1),
+        filter 1.1s ease,
+        box-shadow .45s ease;
     }
-    .ingredients__glass h3 {
-      font-family: "Newsreader", serif; font-size: clamp(28px, 3vw, 40px);
-      line-height: 1.05; letter-spacing: -.03em; margin: 12px 0 12px;
+    .pcard:hover { box-shadow: 0 20px 44px rgba(10,10,10,.08); }
+    .pcard__body { padding: 4px 4px 16px; flex: 0 0 auto; }
+    .pcard__meta {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; margin-bottom: 14px;
     }
-    .ingredients__glass p { font-size: 14px; line-height: 1.5; color: var(--body); margin-bottom: 16px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-    .chip {
-      padding: 8px 14px; border-radius: 999px; font-size: 13px;
-      background: rgba(255,255,255,.55); border: 1px solid rgba(26,26,26,.12);
+    .pcard__tag {
+      display: inline-flex; align-items: center;
+      padding: 6px 12px; border-radius: 999px;
+      background: #ebe4d8; color: var(--ink-soft);
+      font-size: 12px; font-weight: 500;
     }
-    .ingredients__link {
-      font-family: "Newsreader", serif; font-size: 15px;
-      border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+    .pcard__price {
+      font-size: 15px; font-weight: 500; color: var(--ink); white-space: nowrap;
+    }
+    .pcard__name {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(18px, 1.6vw, 22px);
+      font-weight: 600; letter-spacing: -0.02em;
+      line-height: 1.2; margin-bottom: 8px; color: var(--ink);
+    }
+    .pcard__desc {
+      font-size: 14px; line-height: 1.5; color: var(--muted);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .pcard__media {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ebe6dc;
+      margin-top: auto;
+    }
+    .pcard__media img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s cubic-bezier(.22,1,.36,1);
+    }
+    .pcard:hover .pcard__media img { transform: scale(1.04); }
+    .products__cta { display: flex; justify-content: center; }
+    .products__cta .btn {
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 12px 22px;
+      font-weight: 600;
     }
 
-    /* REVIEWS */
-    .reviews { padding: clamp(48px, 6vw, 88px) 0; }
-    .reviews__head {
-      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-      gap: 16px; margin-bottom: 28px;
+    /* SERVICES */
+    .service {
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 4vw, 56px);
+      align-items: center; margin-bottom: clamp(40px, 6vw, 72px);
     }
-    .reviews__title {
-      font-family: "Newsreader", serif; font-size: clamp(36px, 4.5vw, 64px); letter-spacing: -.03em;
+    .service:last-child { margin-bottom: 0; }
+    .service--flip { grid-template-columns: 0.95fr 1.05fr; }
+    .service--flip .service__media { order: 2; }
+    .service__media {
+      border-radius: var(--radius); overflow: hidden; aspect-ratio: 5/4;
     }
-    .masonry {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: stretch;
+    .service__media img, .service__media video {
+      width: 100%; height: 100%; object-fit: cover;
     }
-    .tile {
-      border-radius: 4px; overflow: hidden; background: var(--cream);
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
-      will-change: opacity, transform;
+    .service__title {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(26px, 3vw, 36px); font-weight: 600;
+      letter-spacing: -0.03em; margin-bottom: 14px;
     }
-    .tile.is-in { opacity: 1; transform: none; }
-    .tile.is-out { opacity: 0; transform: translateY(-14px); }
-    .tile--img { aspect-ratio: 1/1; }
-    .tile--img img { width: 100%; height: 100%; object-fit: cover; }
-    .tile--quote { padding: 20px; background: var(--cream); display: flex; flex-direction: column; justify-content: space-between; }
-    .tile--quote q {
-      font-family: "Newsreader", serif; font-size: clamp(16px, 1.3vw, 22px);
-      line-height: 1.35; letter-spacing: -.015em; quotes: "“" "”";
-      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .tile--quote .byline { margin-top: 14px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .service__desc { font-size: 16px; line-height: 1.65; color: var(--ink-soft); max-width: 38ch; }
 
-    /* JOURNAL */
-    .journal { padding: 0 0 clamp(48px, 6vw, 88px); }
-    .journal__head {
-      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-      gap: 16px; margin-bottom: 28px;
+    /* RESULTS */
+    .results { background: var(--ink); color: var(--white); }
+    .results .eyebrow { color: rgba(255,255,255,.55); }
+    .results .eyebrow::before {
+      background:
+        radial-gradient(circle at right center, rgba(255,255,255,.55) 0 2.5px, transparent 2.7px) right center / 6px 6px no-repeat,
+        linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.35)) left center / calc(100% - 4px) 1px no-repeat;
     }
-    .journal__title {
-      font-family: "Newsreader", serif; font-size: clamp(36px, 4.5vw, 64px); letter-spacing: -.03em;
+    .results .eyebrow::after {
+      background:
+        radial-gradient(circle at left center, rgba(255,255,255,.55) 0 2.5px, transparent 2.7px) left center / 6px 6px no-repeat,
+        linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.35)) right center / calc(100% - 4px) 1px no-repeat;
     }
-    .articles {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    .results .section-title { color: var(--white); }
+    .ba {
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      aspect-ratio: 16/9; max-width: 920px; margin: 0 auto; user-select: none;
+      touch-action: none; cursor: ew-resize;
+    }
+    .ba__layer { position: absolute; inset: 0; }
+    .ba__layer img { width: 100%; height: 100%; object-fit: cover; }
+    .ba__after { clip-path: inset(0 0 0 50%); }
+    .ba__handle {
+      position: absolute; top: 0; bottom: 0; left: 50%;
+      width: 2px; background: var(--white); transform: translateX(-50%);
+      z-index: 3;
+    }
+    .ba__knob {
+      position: absolute; top: 50%; left: 50%;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--white); color: var(--ink);
+      display: grid; place-items: center;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .ba__label {
+      position: absolute; bottom: 16px; z-index: 4;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(0,0,0,.45); backdrop-filter: blur(8px);
+      font-size: 12px; font-weight: 500;
+    }
+    .ba__label--before { left: 16px; }
+    .ba__label--after { right: 16px; }
+
+    /* PROCESS — 3×2 grid with media tiles */
+    .process { background: var(--cream); }
+    .process .section-title { margin-bottom: 40px; font-weight: 600; }
+    .process__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .step {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 28px 26px 32px;
+      min-height: 280px;
+      display: flex; flex-direction: column;
+      transition:
+        opacity 1.15s cubic-bezier(.16, 1, .3, 1),
+        transform 1.25s cubic-bezier(.16, 1, .3, 1),
+        filter 1.1s ease,
+        box-shadow .4s ease;
+    }
+    .step:hover { box-shadow: 0 16px 40px rgba(10,10,10,.06); }
+    .step__icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--ink); color: var(--white);
+      display: grid; place-items: center; margin-bottom: 36px; flex-shrink: 0;
+    }
+    .step__icon svg { width: 22px; height: 22px; }
+    .step__title {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(20px, 1.8vw, 24px);
+      font-weight: 600; letter-spacing: -0.02em;
+      margin-bottom: 12px; margin-top: auto;
+    }
+    .step__desc {
+      font-size: 15px; line-height: 1.55; color: var(--muted);
+      max-width: 28ch;
+    }
+    .step--media {
+      position: relative; padding: 0; overflow: hidden;
+      min-height: 280px; background: #1a1512;
+    }
+    .step--media:hover { transform: none; box-shadow: none; }
+    .step--media img,
+    .step--media video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .step--media video { opacity: 0; transition: opacity .5s ease; }
+    .step--media video.is-ready { opacity: 1; }
+    .step__play {
+      position: absolute; left: 16px; bottom: 16px; z-index: 2;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,.92); color: var(--ink);
+      display: grid; place-items: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,.18);
+      transition: transform .2s ease;
+    }
+    .step__play:hover { transform: scale(1.06); }
+    .step__play svg { width: 16px; height: 16px; }
+    .step__play .icon-play { display: none; }
+    .step__play.is-paused .icon-pause { display: none; }
+    .step__play.is-paused .icon-play { display: block; }
+
+    /* TESTIMONIALS — 3×2 feedback grid */
+    .testimonials { background: var(--cream); }
+    .testimonials .section-title {
+      max-width: 18ch; margin-bottom: 40px; font-weight: 600;
+    }
+    .t-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .t-card {
+      position: relative;
+      display: flex; flex-direction: column;
+      min-height: 300px;
+      background: var(--white);
+      border-radius: 22px;
+      padding: 26px 24px 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(10,10,10,.04);
+      /* Slow smooth grid pop-up */
+      opacity: 0;
+      transform: translate3d(0, 56px, 0) scale(0.92);
+      filter: blur(6px);
+      transition:
+        opacity 1.15s cubic-bezier(.16, 1, .3, 1),
+        transform 1.25s cubic-bezier(.16, 1, .3, 1),
+        filter 1.1s ease,
+        box-shadow .6s ease;
+      will-change: opacity, transform, filter;
+    }
+    /* Feedback cards — slow pop + stagger (is-in or grid is-pop) */
+    .t-card.reveal {
+      opacity: 0;
+      transform: translate3d(0, 56px, 0) scale(0.92);
+      filter: blur(6px);
+    }
+    .t-card.reveal.is-in,
+    .t-grid.is-pop .t-card {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+    .t-grid .t-card:nth-child(1) { transition-delay: 0.05s; }
+    .t-grid .t-card:nth-child(2) { transition-delay: 0.18s; }
+    .t-grid .t-card:nth-child(3) { transition-delay: 0.31s; }
+    .t-grid .t-card:nth-child(4) { transition-delay: 0.22s; }
+    .t-grid .t-card:nth-child(5) { transition-delay: 0.36s; }
+    .t-grid .t-card:nth-child(6) { transition-delay: 0.48s; }
+    .t-card__stars {
+      display: flex; gap: 3px; margin-bottom: 18px;
+      color: var(--ink);
+    }
+    .t-card__stars svg { width: 16px; height: 16px; }
+    .t-card__stars .star--empty { opacity: .28; }
+    .t-card q {
+      display: block; flex: 1;
+      font-size: 15px; line-height: 1.6;
+      quotes: none; color: var(--ink-soft);
+      margin: 0 0 28px;
+    }
+    .t-card__who {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: auto;
+    }
+    .t-card__avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      object-fit: cover; flex-shrink: 0;
+    }
+    .t-card__divider {
+      width: 1px; height: 36px; background: rgba(10,10,10,.18); flex-shrink: 0;
+    }
+    .t-card__name { font-weight: 700; font-size: 14px; color: var(--ink); line-height: 1.25; }
+    .t-card__role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .t-card--media {
+      color: var(--white);
+      padding: 0;
+      background: #1a1512;
+    }
+    .t-card--media .t-card__bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .t-card--media .t-card__shade {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.15) 20%, rgba(0,0,0,.72) 100%);
+    }
+    .t-card--media .t-card__inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      height: 100%; min-height: 300px;
+      padding: 26px 24px 24px;
+    }
+    .t-card--media .t-card__stars { color: var(--white); }
+    .t-card--media .t-card__stars .star--empty { opacity: .45; }
+    .t-card--media q { color: rgba(255,255,255,.95); }
+    .t-card--media .t-card__divider { background: rgba(255,255,255,.55); }
+    .t-card--media .t-card__name { color: var(--white); }
+    .t-card--media .t-card__role { color: rgba(255,255,255,.75); }
+    .t-card--media .t-card__who { gap: 14px; }
+
+    /* BLOG */
+    .blog__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
     }
     .article {
-      display: block; opacity: 0; transform: translateY(24px);
-      transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
-      will-change: opacity, transform;
+      background: var(--white); border-radius: var(--radius);
+      overflow: hidden; border: 1px solid var(--line);
+      transition:
+        opacity 1.15s cubic-bezier(.16, 1, .3, 1),
+        transform 1.25s cubic-bezier(.16, 1, .3, 1),
+        filter 1.1s ease,
+        box-shadow .4s ease;
     }
-    .article.is-in { opacity: 1; transform: none; }
-    .article.is-out { opacity: 0; transform: translateY(-14px); }
-    .article__media { overflow: hidden; background: var(--cream); margin-bottom: 12px; aspect-ratio: 16/10; }
-    .article:first-child .article__media { aspect-ratio: 16/10; }
-    .article:not(:first-child) .article__media { aspect-ratio: 16/10; }
+    .article__media { aspect-ratio: 16/10; overflow: hidden; }
     .article__media img {
-      width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22,1,.36,1);
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
     }
     .article:hover .article__media img { transform: scale(1.04); }
-    .article__meta { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-    .article__name { font-family: "Newsreader", serif; font-size: clamp(22px, 1.8vw, 28px); letter-spacing: -.02em; line-height: 1.2; }
+    .article__body { padding: 22px; }
+    .article__meta {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      font-size: 12px; color: var(--muted); margin-bottom: 12px;
+    }
+    .article__meta span:first-child {
+      padding: 4px 10px; border-radius: 999px; background: var(--cream); color: var(--ink);
+      font-weight: 500;
+    }
+    .article__name {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .article__desc { font-size: 14px; line-height: 1.55; color: var(--muted); }
 
-    /* FOOTER — Ondine layout */
+    /* FAQ */
+    .faq { max-width: 760px; margin: 0 auto; }
+    .faq__item { border-bottom: 1px solid var(--line); }
+    .faq__q {
+      width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 22px 0; text-align: left;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(17px, 2vw, 20px); font-weight: 600; letter-spacing: -0.02em;
+    }
+    .faq__icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--line); display: grid; place-items: center; flex-shrink: 0;
+      transition: transform .3s ease, background .3s ease;
+    }
+    .faq__item.is-open .faq__icon { transform: rotate(45deg); background: var(--ink); color: var(--white); }
+    .faq__a {
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height .4s ease, opacity .3s ease, padding .3s ease;
+      font-size: 15px; line-height: 1.65; color: var(--muted);
+    }
+    .faq__item.is-open .faq__a { max-height: 200px; opacity: 1; padding-bottom: 22px; }
+
+    /* CTA — centered copy + 3-image gallery */
+    .cta {
+      background: var(--cream);
+      padding: clamp(72px, 10vw, 120px) 0 clamp(64px, 8vw, 100px);
+      text-align: center;
+    }
+    .cta__content {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      padding: 0 var(--pad);
+    }
+    .cta__label {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+      font-size: 14px; color: var(--muted); margin-bottom: 22px;
+    }
+    .cta__label-rule {
+      width: min(220px, 55vw); height: 1px;
+      background: rgba(10,10,10,.28);
+      position: relative;
+    }
+    .cta__label-rule::before,
+    .cta__label-rule::after {
+      content: "";
+      position: absolute; top: 50%;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(10,10,10,.4);
+      transform: translateY(-50%);
+    }
+    .cta__label-rule::before { left: 0; }
+    .cta__label-rule::after { right: 0; }
+    .cta__title {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(34px, 5vw, 52px);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--ink); margin-bottom: 16px;
+    }
+    .cta__desc {
+      font-size: clamp(15px, 1.2vw, 17px);
+      line-height: 1.65; color: var(--muted);
+      max-width: 42ch; margin: 0 auto;
+    }
+    .cta__gallery {
+      display: flex; align-items: center; justify-content: center;
+      gap: clamp(12px, 1.8vw, 22px);
+      width: min(100% - 2 * var(--pad), 980px);
+      margin: 0 auto;
+    }
+    .cta__shot {
+      border-radius: 28px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 18px 40px rgba(10,10,10,.08);
+      background: #ddd;
+    }
+    .cta__shot img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .cta__shot--side {
+      width: min(28%, 260px);
+      aspect-ratio: 4 / 5;
+    }
+    .cta__shot--center {
+      width: min(38%, 360px);
+      aspect-ratio: 3 / 4;
+      border-radius: 32px;
+      box-shadow: 0 24px 50px rgba(10,10,10,.12);
+    }
+
+    /* FOOTER */
     .footer {
-      padding: clamp(56px, 7vw, 88px) 0 40px;
+      background: var(--ink); color: rgba(255,255,255,.78);
+      padding: clamp(56px, 8vw, 88px) 0 clamp(20px, 3vw, 36px);
       overflow: hidden;
     }
     .footer__top {
-      display: grid;
-      grid-template-columns: minmax(240px, 400px) 1fr;
-      gap: clamp(40px, 6vw, 100px);
-      align-items: start;
-      margin-bottom: clamp(48px, 6vw, 96px);
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.12);
+      margin-bottom: 36px;
     }
-    .footer__cols {
-      display: grid;
-      grid-template-columns: repeat(4, max-content);
-      gap: clamp(28px, 4vw, 56px);
-      justify-content: end;
+    .footer__brand {
+      font-family: "Staatliches", sans-serif;
+      font-size: 42px; letter-spacing: 0.04em; color: var(--white);
+      margin-bottom: 14px;
     }
-    .footer__news h3 {
-      font-family: "Newsreader", serif;
-      font-size: clamp(32px, 3.2vw, 48px);
-      font-weight: 400;
-      letter-spacing: -.015em;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .footer__news p {
-      font-size: 13px; line-height: 1.4; color: var(--muted);
-      margin-bottom: 28px; max-width: 280px;
-    }
+    .footer__lead { font-size: 15px; line-height: 1.6; max-width: 34ch; margin-bottom: 24px; }
     .footer__form {
-      display: flex; align-items: center; gap: 16px;
-      width: 100%; max-width: 400px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--hairline);
+      display: flex; gap: 8px; max-width: 420px;
+      padding: 6px; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 999px;
     }
     .footer__form input {
-      flex: 1; border: none; background: transparent; outline: none;
-      font: inherit; font-size: 16px; color: var(--ink); padding: 0;
-      min-width: 0;
+      flex: 1; min-width: 0; border: 0; background: transparent;
+      color: var(--white); padding: 12px 16px; outline: none; font: inherit;
     }
-    .footer__form input::placeholder { color: var(--muted); }
+    .footer__form input::placeholder { color: rgba(255,255,255,.4); }
     .footer__form button {
-      flex-shrink: 0; background: transparent; border: none;
-      font-size: 14px; font-weight: 400; letter-spacing: .01em;
-      color: var(--ink); padding: 0; white-space: nowrap;
-      cursor: pointer;
+      padding: 12px 18px; border-radius: 999px;
+      background: var(--white); color: var(--ink); font-weight: 600; font-size: 13px;
     }
-    .footer__form button:hover { opacity: .55; }
+    .footer__cols {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
     .footer__col h4 {
-      font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 18px; font-weight: 400;
+      color: var(--white); font-size: 13px; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 16px; font-weight: 600;
     }
     .footer__col a {
-      display: block; font-size: 14px; margin-bottom: 12px;
-      color: var(--ink); transition: opacity .2s;
+      display: block; font-size: 14px; margin-bottom: 10px;
+      transition: color .2s ease;
     }
-    .footer__col a:hover { opacity: .5; }
+    .footer__col a:hover { color: var(--white); }
+    .footer__bottom {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+      font-size: 13px; color: rgba(255,255,255,.45);
+      margin-bottom: 28px;
+    }
     .footer__mark {
       position: relative;
       width: 100%;
-      margin: clamp(24px, 3vw, 48px) 0 clamp(28px, 4vw, 64px);
-      line-height: 0.78;
+      margin: clamp(12px, 2.5vw, 28px) 0 0;
       overflow: hidden;
+      line-height: 0.82;
+      pointer-events: none;
+      user-select: none;
     }
     .footer__mark.reveal,
-    .footer__mark.reveal.is-in,
-    .footer__mark.reveal.is-out {
+    .footer__mark.reveal.is-in {
       opacity: 1 !important;
       transform: none !important;
     }
-    .footer__mark-shift {
-      will-change: transform;
-    }
+    .footer__mark-shift { will-change: transform; }
     .footer__mark-text {
-      font-family: "Newsreader", serif;
-      /* fallback before JS fit — sized for longer "Cutiglow" */
-      font-size: clamp(56px, 14vw, 420px);
-      font-weight: 200;
-      letter-spacing: -0.07em;
-      line-height: 0.78;
-      color: var(--ink);
-      opacity: 0;
+      font-family: "Staatliches", sans-serif;
+      font-size: clamp(72px, 20vw, 300px);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 0.82;
+      text-transform: uppercase;
       white-space: nowrap;
-      user-select: none;
       display: block;
-      margin: 0;
       width: max-content;
-      max-width: none;
-      transform: translate3d(0, 32px, 0) scale(0.94);
+      margin: 0;
+      color: transparent;
+      /* Reference: dark top → light bottom (smokey fade into black) */
+      background-image: linear-gradient(
+        180deg,
+        #0a0a0a 0%,
+        #1a1a1a 18%,
+        #3a3a3a 38%,
+        #7a7a7a 62%,
+        #b8b8b8 82%,
+        #dcdcdc 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform: translate3d(0, 28px, 0);
       transform-origin: left center;
-      transition: opacity .9s ease, transform 1.15s cubic-bezier(.22,1,.36,1);
+      transition: opacity .9s ease, transform 1.1s cubic-bezier(.22,1,.36,1);
       will-change: transform, opacity;
     }
     .footer__mark.is-in .footer__mark-text {
-      opacity: 0.35;
-      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
-    .footer__mark.is-out .footer__mark-text {
+
+    /* MOBILE DRAWER */
+    .drawer {
+      position: fixed; inset: 0; z-index: 120;
+      background: var(--cream); padding: 20px var(--pad);
+      display: none; flex-direction: column;
+      transform: translateX(100%); transition: transform .4s cubic-bezier(.22,1,.36,1);
+    }
+    .drawer.is-visible { display: flex; }
+    .drawer.is-open { transform: none; }
+    .drawer__top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 40px;
+    }
+    .drawer__links { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .drawer__links a {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: clamp(32px, 9vw, 44px); font-weight: 600; letter-spacing: -0.03em;
+    }
+    .drawer__foot { padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+
+    /* REVEAL — slow smooth pop-up (site-wide) */
+    .reveal {
       opacity: 0;
-      transform: translate3d(0, -20px, 0) scale(0.97);
+      transform: translate3d(0, 48px, 0) scale(0.94);
+      filter: blur(5px);
+      transition:
+        opacity 1.1s cubic-bezier(.16, 1, .3, 1),
+        transform 1.2s cubic-bezier(.16, 1, .3, 1),
+        filter 1.05s ease;
+      will-change: opacity, transform, filter;
     }
-    .footer__bottom {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 16px;
-      align-items: center;
-      padding-bottom: 8px;
+    .reveal.is-in {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
     }
-    .footer__meta { font-size: 13px; color: var(--muted); }
-    .footer__social {
-      display: flex; justify-content: center; gap: 8px;
-      font-size: 13px; color: var(--muted);
-    }
-    .footer__social a { color: var(--muted); transition: color .2s; }
-    .footer__social a:hover { color: var(--ink); }
-    .footer__legal {
-      display: flex; justify-content: flex-end; gap: 8px;
-      font-size: 13px; color: var(--muted);
-    }
-    .footer__legal a { color: var(--muted); transition: color .2s; }
-    .footer__legal a:hover { color: var(--ink); }
 
-    /* Mobile nav drawer */
-    .nav-drawer {
-      position: fixed; inset: 0; z-index: 80;
-      background: rgba(247,246,243,.96);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      display: flex; flex-direction: column;
-      padding: 28px 24px 40px;
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity .35s ease, visibility .35s ease;
+    /* Staggered grid pops for product / process / blog cards */
+    .products__grid .pcard.reveal,
+    .process__grid .step.reveal,
+    .blog__grid .article.reveal {
+      opacity: 0;
+      transform: translate3d(0, 56px, 0) scale(0.92);
+      filter: blur(6px);
     }
-    .nav-drawer.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
-    .nav-drawer__top {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px;
+    .products__grid .pcard.reveal.is-in,
+    .process__grid .step.reveal.is-in,
+    .blog__grid .article.reveal.is-in,
+    .products__grid.is-pop .pcard,
+    .process__grid.is-pop .step,
+    .blog__grid.is-pop .article {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
     }
-    .nav-drawer__brand {
-      font-family: "Newsreader", serif; font-size: 28px; letter-spacing: -.02em;
-    }
-    .nav-drawer__close {
-      width: 44px; height: 44px; border-radius: 999px;
-      display: grid; place-items: center; background: rgba(26,26,26,.06);
-    }
-    .nav-drawer__links {
-      list-style: none; display: flex; flex-direction: column; gap: 8px;
-      flex: 1;
-    }
-    .nav-drawer__links a {
-      font-family: "Newsreader", serif;
-      font-size: clamp(36px, 10vw, 52px);
-      letter-spacing: -.03em; line-height: 1.15;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .45s ease, transform .45s cubic-bezier(.22,1,.36,1);
-    }
-    .nav-drawer.is-open .nav-drawer__links a {
-      opacity: 1; transform: none;
-    }
-    .nav-drawer.is-open .nav-drawer__links li:nth-child(1) a { transition-delay: .05s; }
-    .nav-drawer.is-open .nav-drawer__links li:nth-child(2) a { transition-delay: .1s; }
-    .nav-drawer.is-open .nav-drawer__links li:nth-child(3) a { transition-delay: .15s; }
-    .nav-drawer.is-open .nav-drawer__links li:nth-child(4) a { transition-delay: .2s; }
-    .nav-drawer.is-open .nav-drawer__links li:nth-child(5) a { transition-delay: .25s; }
-    .nav-drawer__foot {
-      display: flex; flex-wrap: wrap; gap: 16px;
-      padding-top: 24px; border-top: 1px solid var(--hairline);
-      font-size: 14px; color: var(--muted);
-    }
-    .nav-drawer__foot a { color: var(--muted); }
-    body.nav-open { overflow: hidden; }
+    .products__grid .pcard:nth-child(1),
+    .process__grid .step:nth-child(1),
+    .blog__grid .article:nth-child(1) { transition-delay: 0.06s; }
+    .products__grid .pcard:nth-child(2),
+    .process__grid .step:nth-child(2),
+    .blog__grid .article:nth-child(2) { transition-delay: 0.18s; }
+    .products__grid .pcard:nth-child(3),
+    .process__grid .step:nth-child(3),
+    .blog__grid .article:nth-child(3) { transition-delay: 0.3s; }
+    .process__grid .step:nth-child(4) { transition-delay: 0.2s; }
+    .process__grid .step:nth-child(5) { transition-delay: 0.34s; }
+    .process__grid .step:nth-child(6) { transition-delay: 0.46s; }
 
-    /* RESPONSIVE */
-    @media (max-width: 1100px) {
-      .announce__item--left, .announce__item--right { display: none; }
-      .hero__copy { min-height: 0; display: flex; flex-direction: column; gap: 28px; }
-      .hero__main { padding-right: 0; }
-      .hero__aside { position: static; width: 100%; max-width: 420px; }
-      .manifesto__row, .signature__row, .ritual__intro { grid-template-columns: 1fr; }
-      .manifesto__stats { margin-left: 0; }
-      .signature__sticky { position: relative; top: auto; max-width: 480px; max-height: 520px; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); }
-      .masonry { grid-template-columns: repeat(2, 1fr); }
-      .articles { grid-template-columns: 1fr 1fr; }
-      .ritual-card {
-        grid-template-columns: 1fr;
-        height: auto;
-        position: relative;
-        top: auto !important;
-        margin-bottom: 32px;
-      }
-      .ritual-card__img { aspect-ratio: 16/10; }
-      .ritual-card__body { padding: 24px 0 8px; }
-      .footer__top {
-        grid-template-columns: 1fr;
-        gap: 48px;
-        margin-bottom: 48px;
-      }
-      .footer__cols {
-        justify-content: start;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 32px 40px;
-        width: 100%;
-      }
-      .counters { grid-template-columns: 1fr; gap: 40px; }
-      .index-hover { display: none; }
-      .benefit { grid-template-columns: 28px 1fr; }
-      .benefit__body { grid-column: 2; }
+    .pcard.reveal.is-in:hover,
+    .products__grid.is-pop .pcard:hover {
+      transform: translate3d(0, -4px, 0) scale(1);
     }
-    @media (max-width: 768px) {
-      .announce { padding: 8px 16px; grid-template-columns: 1fr; }
-      .announce__item--center { justify-self: center; font-size: 9px; }
+    .step.reveal.is-in:hover,
+    .process__grid.is-pop .step:not(.step--media):hover {
+      transform: translate3d(0, -3px, 0) scale(1);
+    }
+    .article.reveal.is-in:hover,
+    .blog__grid.is-pop .article:hover {
+      transform: translate3d(0, -4px, 0) scale(1);
+    }
+
+    /* FAQ + services stagger */
+    .faq .faq__item.reveal.is-in:nth-child(1) { transition-delay: .04s; }
+    .faq .faq__item.reveal.is-in:nth-child(2) { transition-delay: .12s; }
+    .faq .faq__item.reveal.is-in:nth-child(3) { transition-delay: .2s; }
+    .faq .faq__item.reveal.is-in:nth-child(4) { transition-delay: .28s; }
+    .faq .faq__item.reveal.is-in:nth-child(5) { transition-delay: .36s; }
+    .faq .faq__item.reveal.is-in:nth-child(6) { transition-delay: .44s; }
+    .service.reveal.is-in:nth-of-type(1) { transition-delay: .06s; }
+    .service.reveal.is-in:nth-of-type(2) { transition-delay: .18s; }
+    .service.reveal.is-in:nth-of-type(3) { transition-delay: .3s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 960px) {
+      .nav { padding: 8px 16px; }
+      .nav__bar { padding: 8px 10px; gap: 12px; }
+      .nav__brand { min-width: 0; font-size: 22px; }
       .nav__links { display: none; }
-      .nav__toggle { display: inline-flex; }
-      .nav__brand { margin-right: 0; font-size: 20px; }
-      .nav__pill {
-        width: 100%; max-width: none;
-        justify-content: space-between;
-        padding: 6px 6px 6px 16px;
-      }
-      .nav__actions { margin-left: 0; }
-      .nav__contact { padding: 10px 14px; font-size: 12px; }
-      .hero {
-        margin-top: -64px; padding-top: 80px;
-      }
-      .hero__title { font-size: clamp(42px, 14vw, 72px); line-height: .92; letter-spacing: -.04em; }
-      .hero__eyebrow { margin-bottom: 16px; }
-      .hero__aside { max-width: none; }
-      .hero__desc { font-size: 15px; margin-bottom: 20px; }
-      .hero__scroll { display: none; }
-      .hero__image-wrap { aspect-ratio: 5/4; border-radius: 0; }
-      .hero__caption {
-        flex-direction: column; align-items: flex-start; gap: 2px;
-        border-radius: 16px; left: 12px; bottom: 12px; right: auto;
-        max-width: calc(100% - 24px); padding: 10px 14px;
-      }
-      .hero__caption-name, .hero__caption-meta { white-space: normal; }
-      .section { padding: clamp(56px, 12vw, 96px) 0; }
-      .manifesto__reveal {
-        font-size: clamp(28px, 8vw, 44px); letter-spacing: -.025em;
-      }
-      .manifesto__stats { grid-template-columns: 1fr; gap: 24px; }
-      .signature__title { font-size: clamp(36px, 10vw, 56px); }
-      /* Signature / philosophy product image — shorter on mobile */
-      .signature__sticky {
-        position: relative;
-        top: auto;
-        width: 100%;
-        max-width: none;
-        max-height: none;
-        aspect-ratio: 5 / 4;
-        margin-bottom: 24px;
-        border-radius: 0;
-      }
-      .signature__sticky img {
-        transform: none;
-        object-fit: cover;
-        object-position: center 40%;
-      }
-      .signature__eyebrow { margin-bottom: 16px; }
-      .signature__desc { margin-bottom: 28px; }
-      .collection__title, .bestsellers__title, .ritual__title, .reviews__title, .journal__title {
-        font-size: clamp(36px, 10vw, 56px);
-      }
-      .index-table .col-type, .index-table .col-size,
-      .index-table thead .h-type, .index-table thead .h-size { display: none; }
-      .index-table .col-no { width: 40px; }
-      .index-table .col-price { font-size: 14px; }
-
-      /* Bestsellers — Ondine-style horizontal carousel (mobile) */
-      .bestsellers { padding: 40px 0 48px; overflow: hidden; }
-      .bestsellers .sec-label { margin-bottom: 12px !important; }
-      .bestsellers__head {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 18px;
-        margin-bottom: 28px;
-      }
-      .bestsellers__title { font-size: clamp(40px, 11vw, 52px); line-height: 1; }
-      .filters {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 22px;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-bottom: 2px;
-      }
-      .filters::-webkit-scrollbar { display: none; }
-      .filter-tab {
-        flex-shrink: 0;
-        padding: 0 0 10px;
-        border: none;
-        border-radius: 0;
-        background: transparent;
-        color: var(--muted);
-        font-size: 14px;
-        font-weight: 400;
-        border-bottom: 1.5px solid transparent;
-      }
-      .filter-tab.is-active {
-        background: transparent;
-        color: var(--ink);
-        border-bottom-color: var(--ink);
-      }
-      .filter-tab:not(.is-active):hover {
-        border-color: transparent;
-        color: var(--ink);
-      }
-      .products-grid {
-        display: flex;
-        grid-template-columns: none;
-        gap: 14px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        margin-inline: calc(-1 * var(--pad));
-        padding-inline: var(--pad);
-        padding-bottom: 4px;
-      }
-      .products-grid::-webkit-scrollbar { display: none; }
-      .pcard {
-        flex: 0 0 min(68vw, 260px);
-        width: min(68vw, 260px);
-        max-width: 260px;
-        scroll-snap-align: start;
-      }
-      .pcard.is-hidden { display: none !important; }
-      .pcard__media {
-        aspect-ratio: 3/4;
-        margin-bottom: 14px;
-        background: var(--cream);
-      }
-      .pcard__pill { display: none; }
-      .pcard__eyebrow {
-        font-size: 10px;
-        letter-spacing: .12em;
-        margin-bottom: 8px;
-      }
-      .pcard__row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-      }
-      .pcard__name { font-size: 22px; letter-spacing: -.02em; }
-      .pcard__price {
-        font-family: "Hanken Grotesk", sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--ink);
-      }
-      .pcard__meta { display: none; }
-
-      /* Ritual — horizontal scroll cards (mobile only) */
-      .ritual { padding: 48px 0; overflow: hidden; }
-      .ritual__intro { gap: 12px; margin-bottom: 24px; }
-      .ritual-stack {
-        display: flex;
-        gap: 14px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        margin-inline: calc(-1 * var(--pad));
-        padding-inline: var(--pad);
-        padding-bottom: 4px;
-      }
-      .ritual-stack::-webkit-scrollbar { display: none; }
-      .ritual-card {
-        position: relative;
-        top: auto !important;
-        display: flex;
-        flex-direction: column;
-        flex: 0 0 min(78vw, 300px);
-        width: min(78vw, 300px);
-        height: auto;
-        min-width: 0;
-        margin: 0;
-        grid-template-columns: none;
-        gap: 0;
-        background: #fff;
-        scroll-snap-align: start;
-      }
-      .ritual-card__img { aspect-ratio: 4/5; flex-shrink: 0; }
-      .ritual-card__body {
-        padding: 16px 14px 18px;
-        gap: 16px;
-      }
-      .ritual-card__top { margin-bottom: 10px; }
-      .ritual-card__roman { font-size: 18px; }
-      .ritual-card__step { margin-bottom: 8px; font-size: 10px; }
-      .ritual-card__name { font-size: 32px; margin-bottom: 10px; }
-      .ritual-card__desc {
-        font-size: 14px; line-height: 1.5; max-width: none; margin-bottom: 0;
-        display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-      }
-      .ritual-card__product {
-        gap: 10px; padding: 6px; background: var(--cream);
-      }
-      .ritual-card__product img { width: 36px; height: 36px; }
-      .ritual-card__product span { font-size: 13px; padding-right: 12px; }
-      .ingredients { height: 420px; min-height: 0; }
-      .ingredients__glass { left: 16px; right: 16px; width: auto; bottom: 16px; padding: 20px; }
-      .ingredients__prog { width: 100%; }
-      .ingredients__title { font-size: clamp(28px, 8vw, 40px); }
-      .masonry { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .tile--tall { grid-row: auto; }
-      .articles { grid-template-columns: 1fr; gap: 20px; }
-      .article__media { aspect-ratio: 16/9 !important; }
-      .footer {
-        padding: 64px 0 32px;
-      }
-      .footer__top { gap: 40px; margin-bottom: 36px; }
-      .footer__news h3 { font-size: clamp(28px, 8vw, 40px); }
-      .footer__news p { max-width: none; margin-bottom: 20px; }
-      .footer__form { max-width: none; }
-      .footer__cols {
-        grid-template-columns: 1fr 1fr;
-        gap: 28px 24px;
-      }
-      .footer__col a { font-size: 13px; margin-bottom: 10px; }
-      .footer__mark {
-        margin: 16px 0 28px;
-      }
-      .footer__bottom {
-        grid-template-columns: 1fr;
-        text-align: left;
-        gap: 10px;
-      }
-      .footer__social, .footer__legal { justify-content: flex-start; }
+      .nav__toggle { display: grid; }
+      .about__card { padding: 8px; border-radius: 22px; }
+      .about__media { border-radius: 16px; aspect-ratio: 4 / 3; }
+      .about__stats { gap: 8px; padding: 18px 14px 20px; }
+      .products__grid, .blog__grid { grid-template-columns: 1fr 1fr; }
+      .service, .service--flip { grid-template-columns: 1fr; }
+      .service--flip .service__media { order: 0; }
+      .process__grid { grid-template-columns: 1fr 1fr; }
+      .step, .step--media { min-height: 240px; }
+      .t-grid { grid-template-columns: 1fr 1fr; }
+      .footer__top { grid-template-columns: 1fr; }
+      .hero__content { margin-left: var(--pad); max-width: none; padding-bottom: 56px; }
+      .section-title { margin-bottom: 36px; }
     }
-    @media (max-width: 420px) {
-      .pcard { flex-basis: 72vw; width: 72vw; max-width: none; }
-      .ritual-card { flex-basis: 82vw; width: 82vw; }
-      .footer__cols { gap: 24px 16px; }
+    @media (max-width: 640px) {
+      .products__grid, .blog__grid, .process__grid, .t-grid { grid-template-columns: 1fr; }
+      .step--media { min-height: 320px; aspect-ratio: 4/5; }
+      .footer__cols { grid-template-columns: 1fr 1fr; }
+      .footer__form { flex-direction: column; border-radius: 20px; }
+      .footer__mark { margin-top: 12px; }
+      .footer__mark-text { letter-spacing: 0.01em; }
+      .ba { aspect-ratio: 4/5; }
+      .cta__gallery {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-inline: var(--pad);
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        width: 100%;
+      }
+      .cta__gallery::-webkit-scrollbar { display: none; }
+      .cta__shot { scroll-snap-align: center; }
+      .cta__shot--side { width: min(58vw, 220px); }
+      .cta__shot--center { width: min(68vw, 280px); }
+      .nav__cta { display: none; }
+      .section { padding: 64px 0; }
+      .about__stats { grid-template-columns: repeat(2, 1fr); row-gap: 16px; }
+      .stat__value { font-size: 26px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-      .footer__mark-text { transform: none !important; }
+      .marquee__track { animation: none; }
+      .hero__media { transform: none !important; }
+      .hero__content { transform: none !important; opacity: 1 !important; }
+      .footer__mark-text {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      .reveal,
+      .t-card,
+      .pcard,
+      .step,
+      .article,
+      .t-grid.is-pop .t-card,
+      .products__grid.is-pop .pcard,
+      .process__grid.is-pop .step,
+      .blog__grid.is-pop .article {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="intro" id="intro">
-    <p class="intro__label">Cutiglow — Koramangala, Bengaluru</p>
-    <div class="intro__brand"><span class="intro__brand-text">Cutiglow</span><span class="intro__brand-blur"></span></div>
-    <div class="intro__bar"><div class="intro__bar-fill"></div></div>
-  </div>
-
-  <div class="announce">
-    <p class="announce__item announce__item--left">Unlimited items — only one shipping fee</p>
-    <p class="announce__item announce__item--center">New — Excela Moisturiser</p>
-    <p class="announce__item announce__item--right">Bengaluru · Hyderabad · India</p>
-  </div>
-
-  <div class="nav-wrap">
-    <nav class="nav__pill" aria-label="Primary">
+  <header class="nav is-hero" id="nav">
+    <div class="nav__bar">
       <a class="nav__brand" href="#top">Cutiglow</a>
-      <ul class="nav__links">
-        <li><a href="#top">Home</a></li>
-        <li><a href="#collection">Skin Care</a></li>
-        <li><a href="#bestsellers">Hair Care</a></li>
-        <li><a href="#ritual">Sunscreen</a></li>
-      </ul>
-      <div class="nav__actions">
-        <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navDrawer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-        <button class="nav__search" type="button" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
-        <a class="nav__contact" href="https://www.cutiglow.in/pages/contact-information">Contact</a>
-      </div>
-    </nav>
-  </div>
-
-  <div class="nav-drawer" id="navDrawer" hidden>
-    <div class="nav-drawer__top">
-      <a class="nav-drawer__brand" href="#top">Cutiglow</a>
-      <button class="nav-drawer__close" type="button" aria-label="Close menu">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#top">Home</a>
+        <a href="#about">About</a>
+        <a href="#shop">Shop</a>
+        <a href="#journal">Blog</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav__cta" href="https://www.cutiglow.in/collections/all">Shop Now</a>
+      <button class="nav__toggle" type="button" aria-label="Open menu" id="navToggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
-    <ul class="nav-drawer__links">
-      <li><a href="#top">Home</a></li>
-      <li><a href="#collection">Skin Care</a></li>
-      <li><a href="#bestsellers">Hair Care</a></li>
-      <li><a href="#ritual">Sunscreen</a></li>
-      <li><a href="#journal">Journal</a></li>
-    </ul>
-    <div class="nav-drawer__foot">
-      <a href="https://wa.me/916355068030">WhatsApp</a>
-      <a href="mailto:cutiglowcare@gmail.com">Email</a>
-      <a href="https://www.cutiglow.in/">Shop all</a>
+  </header>
+
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer__top">
+      <a class="nav__brand" href="#top">Cutiglow</a>
+      <button type="button" aria-label="Close menu" id="navClose">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
+    <div class="drawer__links">
+      <a href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#shop">Shop</a>
+      <a href="#journal">Blog</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="drawer__foot">Koramangala, Bengaluru · <a href="https://wa.me/916355068030">WhatsApp</a></p>
   </div>
 
   <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero__copy">
-      <div class="hero__main">
-        <p class="hero__eyebrow">Cutiglow — Koramangala, Bengaluru</p>
-        <h1 class="hero__title">
-          <span class="hero__title-line">
-            <span class="word" style="animation-delay:.15s">Glow,</span>
-            <span class="word" style="animation-delay:.25s">in</span>
-            <span class="word" style="animation-delay:.35s">its</span>
-          </span>
-          <span class="hero__title-line hero__title-line--italic">
-            <span class="word" style="animation-delay:.48s">finest</span>
-            <span class="word" style="animation-delay:.58s">form.</span>
-          </span>
-        </h1>
-      </div>
-      <aside class="hero__aside">
-        <p class="hero__desc">Dermatologically tested hair, skin and sun care — trusted formulas that transform lives through beauty.</p>
-        <a class="hero__cta" href="#collection">Shop our products<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M13 5l7 7-7 7" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </aside>
+  <section class="hero" id="top">
+    <div class="hero__media" id="heroParallax" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=2000&q=85"
+        alt=""
+        width="2000"
+        height="1333"
+        fetchpriority="high"
+      />
+      <video autoplay muted loop playsinline>
+        <source src="https://framerusercontent.com/assets/E7AwdfdcbX9uXysQrPSlX4YjU.mp4" type="video/mp4" />
+      </video>
     </div>
-    <div class="hero__media">
-      <div class="hero__image-wrap">
-        <div class="hero__image-parallax" id="heroParallax">
-          <img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=2000" alt="Cutiglow most-loved products" width="2000" height="750" fetchpriority="high"/>
-        </div>
-      </div>
-      <a class="hero__caption" href="#signature"><span class="hero__caption-name">Excela Moisturiser</span><span class="hero__caption-meta">Oil control · Lightweight · Acne-prone skin</span></a>
-      <div class="hero__scroll" aria-hidden="true"><span class="hero__scroll-label">Scroll</span><span class="hero__scroll-line"></span></div>
-    </div>
-  </section>
-
-  <!-- 01 PHILOSOPHY -->
-  <section class="manifesto wrap" id="philosophy">
-    <div class="manifesto__row">
-      <div class="manifesto__label reveal"><span class="manifesto__num">(01)</span><span class="manifesto__tag">Our philosophy</span></div>
-      <p class="manifesto__reveal" id="revealText" aria-label="We curate fewer shelves, with more care. Dermatologist-trusted formulas for hair, skin and sun — so the only thing left is the result."></p>
-    </div>
-    <div class="manifesto__stats">
-      <div class="stat reveal" style="transition-delay:.05s"><div class="stat__value">500+</div><div class="stat__label">products curated</div></div>
-      <div class="stat reveal" style="transition-delay:.15s"><div class="stat__value">28k+</div><div class="stat__label">verified reviews</div></div>
-      <div class="stat reveal" style="transition-delay:.25s"><div class="stat__value">100%</div><div class="stat__label">authentic formulas</div></div>
-    </div>
-  </section>
-
-  <!-- 02 SIGNATURE -->
-  <section class="signature wrap" id="signature">
-    <div class="signature__row">
-      <div class="signature__sticky">
-        <img id="sigImg" src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=1400" alt="Excela Moisturiser" width="1400" height="1800"/>
-      </div>
-      <div class="signature__copy">
-        <p class="signature__eyebrow reveal">(02) &nbsp; The signature</p>
-        <h2 class="signature__title reveal">Excela<br>Moisturiser.</h2>
-        <p class="signature__desc reveal">A lightweight moisturiser for oily and acne-prone skin — oil control and all-day hydration without the shine.</p>
-        <div class="benefits">
-          <div class="benefit reveal" style="transition-delay:.05s"><span class="benefit__num">01</span><h5 class="benefit__head">Oil control</h5><p class="benefit__body">manages excess sebum while keeping skin soft and balanced.</p></div>
-          <div class="benefit reveal" style="transition-delay:.12s"><span class="benefit__num">02</span><h5 class="benefit__head">Matte finish</h5><p class="benefit__body">non-comedogenic texture that absorbs fast, no greasy residue.</p></div>
-          <div class="benefit reveal" style="transition-delay:.19s"><span class="benefit__num">03</span><h5 class="benefit__head">Daily hydration</h5><p class="benefit__body">dermatologically tested support for oily and acne-prone skin.</p></div>
-        </div>
-        <div class="specs reveal">
-          <p class="specs__title">Specification</p>
-          <div class="specs__row"><span class="specs__key">Key actives</span><span>Oil-control complex · Lightweight emollients</span></div>
-          <div class="specs__row"><span class="specs__key">Skin types</span><span>Oily &amp; acne-prone</span></div>
-          <div class="specs__row"><span class="specs__key">Texture</span><span>Non-greasy moisturiser</span></div>
-          <div class="specs__row"><span class="specs__key">Finish</span><span>Matte</span></div>
-          <div class="specs__row"><span class="specs__key">Tested</span><span>Dermatologically tested</span></div>
-          <div class="specs__row"><span class="specs__key">Ships from</span><span>Bengaluru, India</span></div>
-        </div>
-        <div class="signature__actions reveal">
-          <a class="btn" href="https://www.cutiglow.in/collections/moisturizer-cream">Shop moisturisers</a>
-          <a class="signature__link" href="https://wa.me/916355068030">or message us on WhatsApp</a>
-        </div>
+    <div class="hero__shade"></div>
+    <div class="hero__content">
+      <p class="hero__label">Modern Skincare Experience</p>
+      <h1 class="hero__title">Reveal Your Skin’s <em>Natural Radiance</em></h1>
+      <p class="hero__desc">Dermatologically tested hair, skin and sun care — curated in Koramangala to nourish, hydrate, and transform your daily routine.</p>
+      <div class="hero__actions">
+        <a class="btn btn--light" href="https://www.cutiglow.in/collections/all">
+          Shop Products
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="#about">Get Started</a>
       </div>
     </div>
   </section>
 
-  <!-- 03 COLLECTION -->
-  <section class="collection wrap" id="collection">
-    <p class="sec-label reveal" style="margin-bottom:20px"><span>(03)</span> The collection</p>
-    <div class="collection__head">
-      <h2 class="collection__title reveal">Six categories. <em>Nothing more.</em></h2>
-      <a class="collection__view reveal" href="https://www.cutiglow.in/collections/all">View all →</a>
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item">Skin Glow</span>
+      <span class="marquee__item">Deep Hydration</span>
+      <span class="marquee__item">Pure Radiance</span>
+      <span class="marquee__item">Hair Revival</span>
+      <span class="marquee__item">Daily Nourish</span>
+      <span class="marquee__item">Soft Touch</span>
+      <span class="marquee__item">Clear Skin</span>
+      <span class="marquee__item">Fresh Glow</span>
+      <span class="marquee__item">SPF Defence</span>
+      <span class="marquee__item">Beauty Essence</span>
+      <span class="marquee__item">Natural Glow</span>
+      <span class="marquee__item">Oil Control</span>
+      <span class="marquee__item">Skin Glow</span>
+      <span class="marquee__item">Deep Hydration</span>
+      <span class="marquee__item">Pure Radiance</span>
+      <span class="marquee__item">Hair Revival</span>
+      <span class="marquee__item">Daily Nourish</span>
+      <span class="marquee__item">Soft Touch</span>
+      <span class="marquee__item">Clear Skin</span>
+      <span class="marquee__item">Fresh Glow</span>
+      <span class="marquee__item">SPF Defence</span>
+      <span class="marquee__item">Beauty Essence</span>
+      <span class="marquee__item">Natural Glow</span>
+      <span class="marquee__item">Oil Control</span>
     </div>
-    <table class="index-table reveal">
-      <thead>
-        <tr>
-          <th>No.</th><th>Formula</th><th class="h-type">Type</th><th class="h-size">Size</th><th style="text-align:right">Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-href="https://www.cutiglow.in/collections/hair-serum">
-          <td class="col-no">01</td>
-          <td class="col-name">
-            <span class="col-name__text">
-              <span class="col-name__roman">Morr F 5%</span>
-              <span class="col-name__italic" aria-hidden="true">Morr F 5%</span>
-            </span>
-            <div class="index-hover"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=400" alt=""/></div>
-          </td>
-          <td class="col-type">Hair growth serum</td><td class="col-size">60 ml</td><td class="col-price">₹740</td>
-        </tr>
-        <tr data-href="https://www.cutiglow.in/collections/moisturizer-cream">
-          <td class="col-no">02</td>
-          <td class="col-name">
-            <span class="col-name__text">
-              <span class="col-name__roman">Excela Moisturiser</span>
-              <span class="col-name__italic" aria-hidden="true">Excela Moisturiser</span>
-            </span>
-            <div class="index-hover"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=400" alt=""/></div>
-          </td>
-          <td class="col-type">Oil-control cream</td><td class="col-size">—</td><td class="col-price">From ₹630</td>
-        </tr>
-        <tr data-href="https://www.cutiglow.in/collections/sunscreen">
-          <td class="col-no">03</td>
-          <td class="col-name">
-            <span class="col-name__text">
-              <span class="col-name__roman">La Shield IR</span>
-              <span class="col-name__italic" aria-hidden="true">La Shield IR</span>
-            </span>
-            <div class="index-hover"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=400" alt=""/></div>
-          </td>
-          <td class="col-type">Sunscreen gel SPF 30</td><td class="col-size">60 g</td><td class="col-price">₹800</td>
-        </tr>
-        <tr data-href="https://www.cutiglow.in/collections/hair-serum">
-          <td class="col-no">04</td>
-          <td class="col-name">
-            <span class="col-name__text">
-              <span class="col-name__roman">Bontress PRO+</span>
-              <span class="col-name__italic" aria-hidden="true">Bontress PRO+</span>
-            </span>
-            <div class="index-hover"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=400" alt=""/></div>
-          </td>
-          <td class="col-type">Scalp serum</td><td class="col-size">—</td><td class="col-price">₹1,100</td>
-        </tr>
-        <tr data-href="https://www.cutiglow.in/collections/hair-serum">
-          <td class="col-no">05</td>
-          <td class="col-name">
-            <span class="col-name__text">
-              <span class="col-name__roman">Densita-MF</span>
-              <span class="col-name__italic" aria-hidden="true">Densita-MF</span>
-            </span>
-            <div class="index-hover"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=400" alt=""/></div>
-          </td>
-          <td class="col-type">Topical solution</td><td class="col-size">60 ml</td><td class="col-price">₹750</td>
-        </tr>
-        <tr data-href="https://www.cutiglow.in/collections/hair-serum">
-          <td class="col-no">06</td>
-          <td class="col-name">
-            <span class="col-name__text">
-              <span class="col-name__roman">Mintop Forte 5%</span>
-              <span class="col-name__italic" aria-hidden="true">Mintop Forte 5%</span>
-            </span>
-            <div class="index-hover"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=400" alt=""/></div>
-          </td>
-          <td class="col-type">Hair growth solution</td><td class="col-size">60 ml</td><td class="col-price">₹1,025</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+  </div>
 
-  <!-- 04 BESTSELLERS -->
-  <section class="bestsellers wrap" id="bestsellers">
-    <p class="sec-label reveal" style="margin-bottom:20px"><span>(04)</span> Most loved</p>
-    <div class="bestsellers__head">
-      <h2 class="bestsellers__title reveal">Quiet <em>bestsellers.</em></h2>
-      <div class="filters reveal" id="filters">
-        <button class="filter-tab is-active" data-filter="all">All</button>
-        <button class="filter-tab" data-filter="hair">Hair</button>
-        <button class="filter-tab" data-filter="skin">Skin</button>
-        <button class="filter-tab" data-filter="sun">SPF</button>
-      </div>
-    </div>
-    <div class="products-grid" id="productsGrid">
-      <a class="pcard" data-cat="hair" href="https://www.cutiglow.in/collections/hair-serum" style="transition-delay:.05s">
-        <div class="pcard__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=800" alt="Morr F"/><span class="pcard__pill">Discover</span></div>
-        <p class="pcard__eyebrow">No. 01 — Hair</p>
-        <div class="pcard__row"><h3 class="pcard__name">Morr F 5%</h3><span class="pcard__price">₹740</span></div>
-        <p class="pcard__meta">Hair growth serum · 60 ml</p>
-      </a>
-      <a class="pcard" data-cat="skin" href="https://www.cutiglow.in/collections/moisturizer-cream" style="transition-delay:.12s">
-        <div class="pcard__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=800" alt="Excela"/><span class="pcard__pill">Discover</span></div>
-        <p class="pcard__eyebrow">No. 02 — Skin</p>
-        <div class="pcard__row"><h3 class="pcard__name">Excela</h3><span class="pcard__price">From ₹630</span></div>
-        <p class="pcard__meta">Oil-control moisturiser</p>
-      </a>
-      <a class="pcard" data-cat="sun" href="https://www.cutiglow.in/collections/sunscreen" style="transition-delay:.19s">
-        <div class="pcard__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=800" alt="La Shield"/><span class="pcard__pill">Discover</span></div>
-        <p class="pcard__eyebrow">No. 03 — SPF</p>
-        <div class="pcard__row"><h3 class="pcard__name">La Shield IR</h3><span class="pcard__price">₹800</span></div>
-        <p class="pcard__meta">Sunscreen gel · SPF 30</p>
-      </a>
-      <a class="pcard" data-cat="hair" href="https://www.cutiglow.in/collections/hair-serum" style="transition-delay:.26s">
-        <div class="pcard__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=800" alt="Bontress"/><span class="pcard__pill">Discover</span></div>
-        <p class="pcard__eyebrow">No. 04 — Hair</p>
-        <div class="pcard__row"><h3 class="pcard__name">Bontress PRO+</h3><span class="pcard__price">₹1,100</span></div>
-        <p class="pcard__meta">Scalp serum · Hair fall</p>
-      </a>
-    </div>
-  </section>
-
-  <!-- 05 RITUAL STACK -->
-  <section class="ritual" id="ritual">
+  <!-- ABOUT -->
+  <section class="section about" id="about">
     <div class="wrap">
-      <p class="sec-label reveal" style="margin-bottom:20px"><span>(05)</span> Morning &amp; evening</p>
-      <div class="ritual__intro">
-        <h2 class="ritual__title reveal">The ritual, <em>in three.</em></h2>
-        <p class="ritual__aside reveal">Morning and evening. Under four minutes, start to finish.</p>
-      </div>
-      <div class="ritual-stack">
-        <article class="ritual-card">
-          <div class="ritual-card__img"><img data-parallax-img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=1200" alt="Cleanse"/></div>
-          <div class="ritual-card__body">
-            <div>
-              <div class="ritual-card__top"><p class="ritual-card__roman">I <span>—</span> Cleanse</p><span class="ritual-card__n">01</span></div>
-              <p class="ritual-card__step">Step I / III</p>
-              <h3 class="ritual-card__name">Cleanse.</h3>
-              <p class="ritual-card__desc">Gentle cleanse that removes the day without stripping the barrier — soft, calm skin ready for treatment.</p>
+      <p class="eyebrow reveal">About us</p>
+      <h2 class="section-title reveal">The Story Behind Our Glow Journey</h2>
+      <div class="about__card reveal">
+        <div class="about__media">
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80" alt="Applying cream for a natural glow" width="1600" height="900" loading="lazy" />
+          <video autoplay muted loop playsinline>
+            <source src="https://framerusercontent.com/assets/kYPKgHdul9ybIzTPrFgU1T8ovU.mp4" type="video/mp4" />
+          </video>
+          <div class="about__stats" id="aboutStats">
+            <div class="stat">
+              <div class="stat__value"><span data-count="500" data-suffix="+">0+</span></div>
+              <div class="stat__label">Premium Products</div>
             </div>
-            <a class="ritual-card__product" href="https://www.cutiglow.in/collections/face-care"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=120" alt=""/><span>Face care<em>Discover</em></span></a>
+            <div class="stat">
+              <div class="stat__value"><span data-count="28" data-suffix="k+">0k+</span></div>
+              <div class="stat__label">Verified Reviews</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value"><span data-count="100" data-suffix="%">0%</span></div>
+              <div class="stat__label">Authentic Formulas</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value"><span data-count="1" data-suffix=" fee">0 fee</span></div>
+              <div class="stat__label">Unlimited Shipping</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="section products" id="shop">
+    <div class="wrap">
+      <h2 class="section-title reveal">Advanced Skincare For Everyday Glow</h2>
+      <div class="products__grid">
+        <a class="pcard reveal" href="https://www.cutiglow.in/collections/moisturizer-cream">
+          <div class="pcard__body">
+            <div class="pcard__meta">
+              <span class="pcard__tag">Beauty update</span>
+              <span class="pcard__price">₹630</span>
+            </div>
+            <h3 class="pcard__name">Excela Moisturiser</h3>
+            <p class="pcard__desc">Lightweight oil-control cream for oily and acne-prone skin.</p>
+          </div>
+          <div class="pcard__media">
+            <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80" alt="Excela Moisturiser" loading="lazy" width="900" height="900" />
+          </div>
+        </a>
+        <a class="pcard reveal" href="https://www.cutiglow.in/collections/hair-serum">
+          <div class="pcard__body">
+            <div class="pcard__meta">
+              <span class="pcard__tag">Beauty update</span>
+              <span class="pcard__price">₹740</span>
+            </div>
+            <h3 class="pcard__name">Morr F 5%</h3>
+            <p class="pcard__desc">Hair growth serum trusted for denser, healthier strands.</p>
+          </div>
+          <div class="pcard__media">
+            <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80" alt="Morr F 5%" loading="lazy" width="900" height="900" />
+          </div>
+        </a>
+        <a class="pcard reveal" href="https://www.cutiglow.in/collections/sunscreen">
+          <div class="pcard__body">
+            <div class="pcard__meta">
+              <span class="pcard__tag">Glow favorite</span>
+              <span class="pcard__price">₹800</span>
+            </div>
+            <h3 class="pcard__name">La Shield IR</h3>
+            <p class="pcard__desc">SPF 30 sunscreen gel — matte, non-greasy sun protection.</p>
+          </div>
+          <div class="pcard__media">
+            <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=900&q=80" alt="La Shield IR" loading="lazy" width="900" height="900" />
+          </div>
+        </a>
+      </div>
+      <div class="products__cta reveal">
+        <a class="btn btn--dark" href="https://www.cutiglow.in/collections/all">
+          View all
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <p class="eyebrow reveal">Services</p>
+      <h2 class="section-title reveal">Skincare Services For Healthy Skin</h2>
+
+      <article class="service reveal">
+        <div class="service__media">
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80" alt="Deep cleansing care" loading="lazy" width="1200" height="960" />
+        </div>
+        <div>
+          <h3 class="service__title">Deep Cleansing Care</h3>
+          <p class="service__desc">Removes dirt, oil, and impurities to give your skin a fresh, clean, and healthy glow — without stripping the barrier.</p>
+        </div>
+      </article>
+
+      <article class="service service--flip reveal">
+        <div class="service__media">
+          <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1200&q=80" alt="Hydration therapy" loading="lazy" width="1200" height="960" />
+        </div>
+        <div>
+          <h3 class="service__title">Hydration Therapy</h3>
+          <p class="service__desc">Deeply hydrates and nourishes your skin, keeping it soft, smooth, and naturally glowing through Indian weather.</p>
+        </div>
+      </article>
+
+      <article class="service reveal">
+        <div class="service__media">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80" alt="Sun protection care" loading="lazy" width="1200" height="960" />
+        </div>
+        <div>
+          <h3 class="service__title">Sun Protection Care</h3>
+          <p class="service__desc">Protects your skin from UV rays and helps prevent tanning, dark spots, and early aging with lightweight SPF gels.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section results" id="results">
+    <div class="wrap">
+      <p class="eyebrow reveal">See Result</p>
+      <h2 class="section-title reveal">Real Results, Real Glow, Visible Change</h2>
+      <div class="ba reveal" id="ba" role="slider" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <div class="ba__layer">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1400&q=80" alt="Before" />
+        </div>
+        <div class="ba__layer ba__after" id="baAfter">
+          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1400&q=80" alt="After" />
+        </div>
+        <div class="ba__handle" id="baHandle">
+          <div class="ba__knob" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 12H4m16 0h-4M8 12l-3-3m3 3l-3 3M16 12l3-3m-3 3l3 3"/></svg>
+          </div>
+        </div>
+        <span class="ba__label ba__label--before">Before</span>
+        <span class="ba__label ba__label--after">After</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section process" id="process">
+    <div class="wrap">
+      <p class="eyebrow reveal">How it works</p>
+      <h2 class="section-title reveal">The Process to Radiance Unlocked Today</h2>
+      <div class="process__grid">
+        <!-- Row 1 -->
+        <article class="step reveal">
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6v4H9zM8 7h8l1 3v8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8l1-3z"/><path d="M10 12h4M12 12v5"/></svg>
+          </div>
+          <h3 class="step__title">Skin Analysis</h3>
+          <p class="step__desc">We understand your skin type and concerns to create a personalized skincare approach.</p>
+        </article>
+
+        <article class="step step--media reveal">
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80" alt="Facial care treatment" loading="lazy" />
+          <video autoplay muted loop playsinline>
+            <source src="https://framerusercontent.com/assets/kYPKgHdul9ybIzTPrFgU1T8ovU.mp4" type="video/mp4" />
+          </video>
+          <button class="step__play" type="button" aria-label="Pause video" data-video-toggle>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </article>
+
+        <article class="step reveal">
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5M4 19h16"/><path d="M8 16V10M12 16V7M16 16v-5"/></svg>
+          </div>
+          <h3 class="step__title">See Results</h3>
+          <p class="step__desc">Experience smoother, healthier, and naturally glowing skin over time with consistent care</p>
+        </article>
+
+        <!-- Row 2 -->
+        <article class="step reveal">
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 8h8v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8z"/><path d="M10 8V6a2 2 0 0 1 4 0v2"/><path d="M9 12h6"/></svg>
+          </div>
+          <h3 class="step__title">Choose Routine</h3>
+          <p class="step__desc">Select the right products and steps designed specifically for your skin needs every day</p>
+        </article>
+
+        <article class="step reveal">
+          <div class="step__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v6M9 5c0 3 1.5 5 3 7s3 4 3 7a3 3 0 0 1-6 0c0-2 .5-3.5 1.5-5"/><circle cx="12" cy="19" r="1"/></svg>
+          </div>
+          <h3 class="step__title">Apply Daily</h3>
+          <p class="step__desc">Follow a simple routine morning and night for consistent and visible results over time</p>
+        </article>
+
+        <article class="step step--media reveal">
+          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80" alt="Skincare application" loading="lazy" />
+          <video autoplay muted loop playsinline>
+            <source src="https://videos.pexels.com/video-files/3770037/3770037-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+          </video>
+          <button class="step__play" type="button" aria-label="Pause video" data-video-toggle>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials" id="reviews">
+    <div class="wrap">
+      <p class="eyebrow reveal">Real Feedback</p>
+      <h2 class="section-title reveal">Real Experiences, Real Glow, Real Results, Real Beauty</h2>
+      <div class="t-grid" aria-label="Customer reviews">
+        <article class="t-card reveal">
+          <div class="t-card__stars" aria-label="4 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg class="star--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+          </div>
+          <q>After using this skincare routine, my skin feels smoother and more hydrated. I can clearly see a natural glow that wasn’t there before. It has truly improved my daily confidence.</q>
+          <div class="t-card__who">
+            <img class="t-card__avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="" loading="lazy" />
+            <span class="t-card__divider" aria-hidden="true"></span>
+            <div>
+              <div class="t-card__name">Ayesha Khan</div>
+              <div class="t-card__role">Marketing Manager</div>
+            </div>
           </div>
         </article>
-        <article class="ritual-card">
-          <div class="ritual-card__img"><img data-parallax-img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=1200" alt="Treat"/></div>
-          <div class="ritual-card__body">
-            <div>
-              <div class="ritual-card__top"><p class="ritual-card__roman">II <span>—</span> Treat</p><span class="ritual-card__n">02</span></div>
-              <p class="ritual-card__step">Step II / III</p>
-              <h3 class="ritual-card__name">Treat.</h3>
-              <p class="ritual-card__desc">Targeted serums for hair and skin — pressed in, working quietly while you get on with the day.</p>
+
+        <article class="t-card t-card--media reveal">
+          <img class="t-card__bg" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" />
+          <div class="t-card__shade"></div>
+          <div class="t-card__inner">
+            <div class="t-card__stars" aria-label="4 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg class="star--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
             </div>
-            <a class="ritual-card__product" href="https://www.cutiglow.in/collections/hair-serum"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=120" alt=""/><span>Hair serum<em>Discover</em></span></a>
+            <q>I love how gentle these products are on my skin. Within a few weeks, my dullness reduced and my skin started looking fresh and healthy. It’s now part of my daily routine.</q>
+            <div class="t-card__who">
+              <span class="t-card__divider" aria-hidden="true"></span>
+              <div>
+                <div class="t-card__name">Sara Ahmed</div>
+                <div class="t-card__role">Graphic Designer</div>
+              </div>
+            </div>
           </div>
         </article>
-        <article class="ritual-card">
-          <div class="ritual-card__img"><img data-parallax-img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=1200" alt="Protect"/></div>
-          <div class="ritual-card__body">
+
+        <article class="t-card reveal">
+          <div class="t-card__stars" aria-label="4 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg class="star--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+          </div>
+          <q>My skin used to feel dry and uneven, but now it feels soft and balanced. The results are visible and long-lasting. I’m really happy with the improvement every single day.</q>
+          <div class="t-card__who">
+            <img class="t-card__avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="" loading="lazy" />
+            <span class="t-card__divider" aria-hidden="true"></span>
             <div>
-              <div class="ritual-card__top"><p class="ritual-card__roman">III <span>—</span> Protect</p><span class="ritual-card__n">03</span></div>
-              <p class="ritual-card__step">Step III / III</p>
-              <h3 class="ritual-card__name">Protect.</h3>
-              <p class="ritual-card__desc">Lightweight SPF and moisturisers that seal treatment in — matte, non-greasy, all-day defence.</p>
+              <div class="t-card__name">Hira Malik</div>
+              <div class="t-card__role">University Student</div>
             </div>
-            <a class="ritual-card__product" href="https://www.cutiglow.in/collections/sunscreen"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=120" alt=""/><span>Sunscreen<em>Discover</em></span></a>
+          </div>
+        </article>
+
+        <article class="t-card reveal">
+          <div class="t-card__stars" aria-label="4 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg class="star--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+          </div>
+          <q>These products gave my skin a natural glow without making it oily. I get compliments all the time now. It feels like my skin has completely transformed and boosted my confidence.</q>
+          <div class="t-card__who">
+            <img class="t-card__avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="" loading="lazy" />
+            <span class="t-card__divider" aria-hidden="true"></span>
+            <div>
+              <div class="t-card__name">Noor Fatima</div>
+              <div class="t-card__role">Fashion Blogger</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card reveal">
+          <div class="t-card__stars" aria-label="4 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            <svg class="star--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+          </div>
+          <q>I needed something simple yet effective, and this skincare range delivered. My skin texture has improved a lot and looks much more refined than before with consistent care.</q>
+          <div class="t-card__who">
+            <img class="t-card__avatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80" alt="" loading="lazy" />
+            <span class="t-card__divider" aria-hidden="true"></span>
+            <div>
+              <div class="t-card__name">Zainab Ali</div>
+              <div class="t-card__role">Software Engineer</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card t-card--media reveal">
+          <img class="t-card__bg" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" style="filter: grayscale(1);" />
+          <div class="t-card__shade"></div>
+          <div class="t-card__inner">
+            <div class="t-card__stars" aria-label="4 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+              <svg class="star--empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.2 6.2 21l1.1-6.5L2.6 9.8l6.5-.9L12 3z"/></svg>
+            </div>
+            <q>I started seeing visible changes within weeks. My skin feels healthier, more hydrated, and looks naturally radiant. I would definitely recommend it to others.</q>
+            <div class="t-card__who">
+              <span class="t-card__divider" aria-hidden="true"></span>
+              <div>
+                <div class="t-card__name">Maryam Iqbal</div>
+                <div class="t-card__role">Teacher</div>
+              </div>
+            </div>
           </div>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- 06 PROOF -->
-  <section class="proof wrap" id="proof">
-    <p class="sec-label proof__label reveal"><span>(06)</span> Customer love · 28,000+ reviews · India-wide</p>
-    <p class="proof__sub reveal">Rated by real customers across Bengaluru, Hyderabad and beyond.</p>
-    <div class="counters">
-      <div class="counter reveal" style="transition-delay:.05s">
-        <div class="counter__value"><span data-count="53" data-suffix="%">0%</span></div>
-        <p class="counter__label">five-star reviews from verified buyers</p>
-      </div>
-      <div class="counter reveal" style="transition-delay:.12s">
-        <div class="counter__value"><span data-count="28" data-suffix="k+">0k+</span></div>
-        <p class="counter__label">reviews across hair, skin and sun care</p>
-      </div>
-      <div class="counter reveal" style="transition-delay:.19s">
-        <div class="counter__value"><span data-count="1" data-suffix=" fee">0 fee</span></div>
-        <p class="counter__label">shipping fee — unlimited items in one order</p>
+  <!-- JOURNAL -->
+  <section class="section" id="journal">
+    <div class="wrap">
+      <p class="eyebrow reveal">News & Insights</p>
+      <h2 class="section-title reveal">Learn About Healthy Skin Care Every Day</h2>
+      <div class="blog__grid">
+        <a class="article reveal" href="https://www.cutiglow.in/collections/hair-care">
+          <div class="article__media">
+            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy" />
+          </div>
+          <div class="article__body">
+            <div class="article__meta"><span>Skincare Guide</span><span>Mar 5, 2026</span><span>10 min</span></div>
+            <h3 class="article__name">Skin Type Basics</h3>
+            <p class="article__desc">Learn how to identify your skin type and choose the right Cutiglow routine.</p>
+          </div>
+        </a>
+        <a class="article reveal" href="https://www.cutiglow.in/collections/face-care">
+          <div class="article__media">
+            <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy" />
+          </div>
+          <div class="article__body">
+            <div class="article__meta"><span>Skincare Tips</span><span>Oct 4, 2026</span><span>06 min</span></div>
+            <h3 class="article__name">Daily Routine</h3>
+            <p class="article__desc">Build a simple yet effective daily skincare ritual for healthy skin.</p>
+          </div>
+        </a>
+        <a class="article reveal" href="https://www.cutiglow.in/collections/moisturizer-cream">
+          <div class="article__media">
+            <img src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy" />
+          </div>
+          <div class="article__body">
+            <div class="article__meta"><span>Skin Hydration</span><span>May 8, 2026</span><span>08 min</span></div>
+            <h3 class="article__name">Skin Hydration</h3>
+            <p class="article__desc">Why keeping your skin hydrated is essential for a healthy glow.</p>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- 07 INGREDIENTS -->
-  <section class="ingredients" id="ingredients">
-    <div class="ingredients__bg" id="ingBg">
-      <img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=2000" alt="Cutiglow products"/>
-    </div>
-    <div class="ingredients__prog" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="ingredients__glass reveal">
-      <p class="sec-label"><span>(07)</span> What’s inside</p>
-      <h3>Care first.<br>Then science.</h3>
-      <p>Every product we stock is dermatologically tested and curated for real results — hair growth, oil control, sun defence — so actives arrive where they matter.</p>
-      <div class="chips">
-        <span class="chip">Dermatologist tested</span>
-        <span class="chip">Non-comedogenic</span>
-        <span class="chip">SPF 30–50+</span>
-        <span class="chip">Authentic only</span>
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <p class="eyebrow reveal">FAQ’s</p>
+      <h2 class="section-title reveal">Got Questions? We’ve Got Answers</h2>
+      <div class="faq">
+        <div class="faq__item reveal is-open">
+          <button class="faq__q" type="button">How do I choose the right skincare products?<span class="faq__icon">+</span></button>
+          <div class="faq__a">Start with your skin type and concern — oil control, hair growth, or sun defence. Our curated range keeps choices simple; message us on WhatsApp if you want a personal pick.</div>
+        </div>
+        <div class="faq__item reveal">
+          <button class="faq__q" type="button">How long does skincare take to show results?<span class="faq__icon">+</span></button>
+          <div class="faq__a">Most customers notice softer, more balanced skin within 2–4 weeks of consistent use. Hair care formulas often show visible change over 8–12 weeks.</div>
+        </div>
+        <div class="faq__item reveal">
+          <button class="faq__q" type="button">Can I use all products together daily?<span class="faq__icon">+</span></button>
+          <div class="faq__a">Yes — follow cleanse, treat, protect. Layer lightweight textures first and always finish mornings with SPF.</div>
+        </div>
+        <div class="faq__item reveal">
+          <button class="faq__q" type="button">Is sunscreen really necessary every day?<span class="faq__icon">+</span></button>
+          <div class="faq__a">Absolutely. Daily SPF helps prevent tanning, dark spots, and premature ageing — even on cloudy Bengaluru days.</div>
+        </div>
+        <div class="faq__item reveal">
+          <button class="faq__q" type="button">What is the best skincare routine order?<span class="faq__icon">+</span></button>
+          <div class="faq__a">Cleanse → serum or treatment → moisturiser → sunscreen (AM). Keep evenings simple: cleanse, treat, moisturise.</div>
+        </div>
+        <div class="faq__item reveal">
+          <button class="faq__q" type="button">Are your products dermatologically tested?<span class="faq__icon">+</span></button>
+          <div class="faq__a">Yes. Every formula we stock is dermatologically tested and 100% authentic — curated for real results.</div>
+        </div>
       </div>
-      <a class="ingredients__link" href="https://www.cutiglow.in/collections/all">Explore the full range →</a>
     </div>
   </section>
 
-  <!-- 08 REVIEWS -->
-  <section class="reviews wrap" id="reviews">
-    <p class="sec-label reveal" style="margin-bottom:16px"><span>(08)</span> 4.5 / 5 from 28,000+ reviews</p>
-    <div class="reviews__head">
-      <h2 class="reviews__title reveal">In their own words.</h2>
-      <a class="collection__view reveal" href="https://www.cutiglow.in/">Read all reviews →</a>
+  <!-- CTA -->
+  <section class="cta" id="start">
+    <div class="cta__content reveal">
+      <div class="cta__label">
+        <span>Start Your Routine</span>
+        <span class="cta__label-rule" aria-hidden="true"></span>
+      </div>
+      <h2 class="cta__title">Start Your Glow Today and Shine</h2>
+      <p class="cta__desc">Premium skincare solutions crafted to enhance your natural beauty every day with consistent care</p>
     </div>
-    <div class="masonry">
-      <div class="tile tile--quote" style="transition-delay:.05s">
-        <q>Well satisfied service with great price.</q>
-        <p class="byline">Rakhee C. · Hair care</p>
+    <div class="cta__gallery reveal">
+      <div class="cta__shot cta__shot--side">
+        <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=700&q=80" alt="Clay mask ritual" loading="lazy" width="700" height="875" />
       </div>
-      <div class="tile tile--img" style="transition-delay:.1s"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=700" alt=""/></div>
-      <div class="tile tile--quote" style="transition-delay:.15s">
-        <q>Fast in delivery as compared with others, delivered correct. Product intact.</q>
-        <p class="byline">Sanjay G. · Delivery</p>
+      <div class="cta__shot cta__shot--center">
+        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80" alt="Glow face massage" loading="lazy" width="900" height="1200" />
       </div>
-      <div class="tile tile--img" style="transition-delay:.2s"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=700" alt=""/></div>
-      <div class="tile tile--img" style="transition-delay:.25s"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=700" alt=""/></div>
-      <div class="tile tile--quote" style="transition-delay:.3s">
-        <q>More affordable than professional options.</q>
-        <p class="byline">Verified buyer · Hair loss</p>
+      <div class="cta__shot cta__shot--side">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=700&q=80" alt="Facial treatment" loading="lazy" width="700" height="875" />
       </div>
-      <div class="tile tile--quote" style="transition-delay:.35s">
-        <q>Prompt delivery — correct product, intact packaging.</q>
-        <p class="byline">Diana G. · Order</p>
-      </div>
-      <div class="tile tile--img" style="transition-delay:.4s"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=700" alt=""/></div>
-    </div>
-  </section>
-
-  <!-- 09 JOURNAL -->
-  <section class="journal wrap" id="journal">
-    <p class="sec-label reveal" style="margin-bottom:16px"><span>(09)</span> Journal</p>
-    <div class="journal__head">
-      <h2 class="journal__title reveal">Notes on glow.</h2>
-      <a class="collection__view reveal" href="https://www.cutiglow.in/">All notes →</a>
-    </div>
-    <div class="articles">
-      <a class="article" href="https://www.cutiglow.in/collections/hair-care" style="transition-delay:.05s">
-        <div class="article__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_1.jpg?v=1773651350&width=900" alt=""/></div>
-        <p class="article__meta">Ritual · 4 min</p>
-        <h3 class="article__name">The three-step morning for hair and skin that actually sticks</h3>
-      </a>
-      <a class="article" href="https://www.cutiglow.in/collections/sunscreen" style="transition-delay:.12s">
-        <div class="article__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan_3.jpg?v=1773654081&width=900" alt=""/></div>
-        <p class="article__meta">Science · 6 min</p>
-        <h3 class="article__name">SPF gels, explained without the jargon</h3>
-      </a>
-      <a class="article" href="https://www.cutiglow.in/collections/moisturizer-cream" style="transition-delay:.19s">
-        <div class="article__media"><img src="https://cutiglow.in/cdn/shop/files/Website_Banner_Shop_Our_Most_Loved_Products_Brown_Tan.jpg?v=1773646563&width=900" alt=""/></div>
-        <p class="article__meta">Studio · 5 min</p>
-        <h3 class="article__name">Oil control moisturisers for Indian weather</h3>
-      </a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer wrap" id="footer">
-    <div class="footer__top">
-      <div class="footer__news reveal">
-        <h3>Letters from Cutiglow.</h3>
-        <p>Occasional, considered, never more than twice a month.</p>
-        <form class="footer__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed →';">
-          <input type="email" name="email" placeholder="Email address" required autocomplete="email" />
-          <button type="submit">Subscribe →</button>
-        </form>
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">Cutiglow</div>
+          <p class="footer__lead">Subscribe to be in touch with latest updates & news from Koramangala, Bengaluru.</p>
+          <form class="footer__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed';">
+            <input type="email" name="email" placeholder="Email address" required autocomplete="email" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="footer__cols">
+          <nav class="footer__col">
+            <h4>All pages</h4>
+            <a href="#top">Home</a>
+            <a href="#about">About us</a>
+            <a href="#shop">Shop</a>
+            <a href="#journal">Blog</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <nav class="footer__col">
+            <h4>Collection</h4>
+            <a href="https://www.cutiglow.in/collections/skin-care">Skin care</a>
+            <a href="https://www.cutiglow.in/collections/hair-care">Hair care</a>
+            <a href="https://www.cutiglow.in/collections/sunscreen">Sunscreen</a>
+            <a href="https://www.cutiglow.in/collections/all">Shop all</a>
+          </nav>
+          <nav class="footer__col">
+            <h4>Follow us</h4>
+            <a href="mailto:cutiglowcare@gmail.com">cutiglowcare@gmail.com</a>
+            <a href="https://wa.me/916355068030">WhatsApp</a>
+            <a href="https://www.cutiglow.in/pages/contact-information">Koramangala, Bengaluru</a>
+            <a href="tel:+916355068030">+91 63550 68030</a>
+          </nav>
+        </div>
       </div>
-      <div class="footer__cols">
-        <nav class="footer__col reveal" style="transition-delay:.05s">
-          <h4>Collection</h4>
-          <a href="https://www.cutiglow.in/collections/all">All products</a>
-          <a href="https://www.cutiglow.in/collections/hair-care">Hair care</a>
-          <a href="https://www.cutiglow.in/collections/skin-care">Skin care</a>
-          <a href="https://www.cutiglow.in/collections/sunscreen">Sunscreen</a>
-          <a href="https://www.cutiglow.in/collections/moisturizer-cream">Moisturisers</a>
-          <a href="https://www.cutiglow.in/collections/face-serum">Face serum</a>
-        </nav>
-        <nav class="footer__col reveal" style="transition-delay:.1s">
-          <h4>Cutiglow</h4>
-          <a href="#top">Home</a>
-          <a href="#philosophy">Our philosophy</a>
-          <a href="#ingredients">What’s inside</a>
-          <a href="#reviews">Reviews</a>
-          <a href="#bestsellers">Bestsellers</a>
-          <a href="#journal">Journal</a>
-        </nav>
-        <nav class="footer__col reveal" style="transition-delay:.15s">
-          <h4>Care</h4>
-          <a href="https://www.cutiglow.in/pages/contact-information">Contact</a>
-          <a href="https://wa.me/916355068030">WhatsApp</a>
-          <a href="https://www.cutiglow.in/policies/shipping-policy">Shipping</a>
-          <a href="https://www.cutiglow.in/policies/refund-policy">Returns</a>
-        </nav>
-        <nav class="footer__col reveal" style="transition-delay:.2s">
-          <h4>Legal</h4>
-          <a href="https://www.cutiglow.in/policies/privacy-policy">Privacy policy</a>
-          <a href="https://www.cutiglow.in/policies/terms-of-service">Terms of service</a>
-          <a href="mailto:cutiglowcare@gmail.com">Email us</a>
-        </nav>
+      <div class="footer__bottom">
+        <p>© Cutiglow 2026 · Transforming lives through beauty</p>
+        <p><a href="https://www.cutiglow.in/policies/privacy-policy">Privacy</a> · <a href="https://www.cutiglow.in/policies/terms-of-service">Terms</a></p>
       </div>
-    </div>
 
-    <div class="footer__mark reveal" id="footerMark" aria-hidden="true">
-      <div class="footer__mark-shift" id="footerMarkShift">
-        <p class="footer__mark-text" id="footerMarkText">Cutiglow</p>
-      </div>
-    </div>
-
-    <div class="footer__bottom reveal">
-      <p class="footer__meta">© 2026 Cutiglow · Bengaluru</p>
-      <div class="footer__social">
-        <a href="https://www.cutiglow.in/">Shop</a><span>·</span>
-        <a href="https://wa.me/916355068030">WhatsApp</a><span>·</span>
-        <a href="mailto:cutiglowcare@gmail.com">Email</a>
-      </div>
-      <div class="footer__legal">
-        <a href="https://www.cutiglow.in/policies/privacy-policy">Privacy</a><span>·</span>
-        <a href="https://www.cutiglow.in/policies/terms-of-service">Terms</a>
+      <div class="footer__mark reveal" id="footerMark" aria-hidden="true">
+        <div class="footer__mark-shift" id="footerMarkShift">
+          <p class="footer__mark-text" id="footerMarkText">Cutiglow</p>
+        </div>
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script>
-  (function () {
-    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var intro = document.getElementById("intro");
-    var hero = document.getElementById("hero");
+    (function () {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const nav = document.getElementById("nav");
+      const hero = document.getElementById("top");
+      const heroMedia = document.getElementById("heroParallax");
+      const heroShade = hero.querySelector(".hero__shade");
+      const heroContent = hero.querySelector(".hero__content");
+      const drawer = document.getElementById("drawer");
+      const openBtn = document.getElementById("navToggle");
+      const closeBtn = document.getElementById("navClose");
 
-    /* Lenis smooth scroll */
-    var lenis = null;
-    if (!reduced && typeof Lenis !== "undefined") {
-      lenis = new Lenis({
-        duration: 1.15,
-        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smoothWheel: true,
-        touchMultiplier: 1.4
-      });
-      function raf(time) {
-        lenis.raf(time);
+      /* Lenis smooth scroll */
+      let lenis = null;
+      if (!reduced && typeof Lenis !== "undefined") {
+        lenis = new Lenis({
+          duration: 1.15,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          touchMultiplier: 1.4
+        });
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
+        document.documentElement.classList.add("lenis", "lenis-smooth");
       }
-      requestAnimationFrame(raf);
-      document.documentElement.classList.add("lenis");
-    }
 
-    /* Manifesto words */
-    var copy = "We curate fewer shelves, with more care. Dermatologist-trusted formulas for hair, skin and sun — so the only thing left is the result.";
-    var revealEl = document.getElementById("revealText");
-    copy.split(/(\s+)/).forEach(function (w) {
-      if (/^\s+$/.test(w)) { revealEl.appendChild(document.createTextNode(w)); return; }
-      var s = document.createElement("span"); s.className = "rw"; s.textContent = w; revealEl.appendChild(s);
-    });
-    var wordSpans = revealEl.querySelectorAll(".rw");
+      const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+      const lerp = (a, b, t) => a + (b - a) * t;
 
-    function boot() {
-      intro.classList.add("is-done");
-      hero.classList.add("is-ready");
-    }
-    if (reduced) {
-      wordSpans.forEach(function (s) { s.classList.add("is-on"); });
-      document.querySelectorAll(".reveal,.pcard,.tile,.article,.ritual-card").forEach(function (el) { el.classList.add("is-in"); });
-      boot();
-    } else {
-      setTimeout(boot, 1750);
-    }
+      const footerMark = document.getElementById("footerMark");
+      const footerMarkText = document.getElementById("footerMarkText");
+      const footerMarkShift = document.getElementById("footerMarkShift");
 
-    function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
-    function lerp(a, b, t) { return a + (b - a) * t; }
-
-    var heroParallax = document.getElementById("heroParallax");
-    var sigImg = document.getElementById("sigImg");
-    var ingBg = document.getElementById("ingBg");
-    var footerMark = document.getElementById("footerMark");
-    var footerMarkText = document.getElementById("footerMarkText");
-    var footerMarkShift = document.getElementById("footerMarkShift");
-    var counted = false;
-    var ticking = false;
-
-    /* Fit "Cutiglow" wordmark to full container width (like Ondine's Ondine) */
-    function fitFooterMark() {
-      if (!footerMark || !footerMarkText) return;
-      var available = footerMark.clientWidth;
-      if (available < 40) return;
-      var probe = document.createElement("span");
-      probe.textContent = footerMarkText.textContent;
-      probe.style.cssText =
-        "position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;" +
-        "font-family:Newsreader,serif;font-weight:200;font-size:100px;letter-spacing:-8px;";
-      document.body.appendChild(probe);
-      var measured = probe.getBoundingClientRect().width;
-      document.body.removeChild(probe);
-      if (!measured) return;
-      var next = Math.floor((available / measured) * 100);
-      /* Cap high enough for full-bleed desktop; floor keeps mobile readable */
-      next = Math.max(52, Math.min(next, 420));
-      footerMarkText.style.fontSize = next + "px";
-      footerMarkText.style.letterSpacing = (-0.08 * next) + "px";
-    }
-    fitFooterMark();
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(fitFooterMark);
-    }
-    window.addEventListener("resize", function () {
+      const fitFooterMark = () => {
+        if (!footerMark || !footerMarkText) return;
+        const available = footerMark.clientWidth;
+        if (available < 40) return;
+        const probe = document.createElement("span");
+        probe.textContent = footerMarkText.textContent;
+        probe.style.cssText =
+          "position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;" +
+          'font-family:Staatliches,sans-serif;font-weight:400;font-size:100px;letter-spacing:0.02em;text-transform:uppercase;';
+        document.body.appendChild(probe);
+        const measured = probe.getBoundingClientRect().width;
+        document.body.removeChild(probe);
+        if (!measured) return;
+        const next = Math.max(56, Math.min(Math.floor((available / measured) * 100), 320));
+        footerMarkText.style.fontSize = next + "px";
+      };
       fitFooterMark();
-      onScroll();
-    });
+      window.addEventListener("resize", fitFooterMark, { passive: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitFooterMark);
 
-    /* Mobile nav drawer */
-    var drawer = document.getElementById("navDrawer");
-    var toggleBtn = document.querySelector(".nav__toggle");
-    var closeBtn = document.querySelector(".nav-drawer__close");
-    function openDrawer() {
-      if (!drawer) return;
-      drawer.hidden = false;
-      requestAnimationFrame(function () { drawer.classList.add("is-open"); });
-      document.body.classList.add("nav-open");
-      if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "true");
-      if (lenis) lenis.stop();
-    }
-    function closeDrawer() {
-      if (!drawer) return;
-      drawer.classList.remove("is-open");
-      document.body.classList.remove("nav-open");
-      if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
-      if (lenis) lenis.start();
-      setTimeout(function () {
-        if (!drawer.classList.contains("is-open")) drawer.hidden = true;
-      }, 360);
-    }
-    if (toggleBtn) toggleBtn.addEventListener("click", openDrawer);
-    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
-    if (drawer) {
-      drawer.querySelectorAll("a").forEach(function (a) {
-        a.addEventListener("click", closeDrawer);
-      });
-    }
+      const setNav = (scrollY) => {
+        const y = scrollY ?? (lenis ? lenis.scroll : window.scrollY);
+        nav.classList.toggle("is-scrolled", y > 24);
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        nav.classList.toggle("is-hero", heroBottom > 80);
+      };
 
-    function updateScroll() {
-      var vh = window.innerHeight;
-
-      if (heroParallax) {
-        var media = hero.querySelector(".hero__media");
-        if (media) {
-          var mr = media.getBoundingClientRect();
-          var prog = clamp(1 - mr.bottom / (vh + mr.height), 0, 1);
-          heroParallax.style.transform = "translate3d(0," + lerp(0, -mr.height * 0.08, prog).toFixed(2) + "px,0) scale(" + lerp(1.12, 1, prog).toFixed(4) + ")";
+      /* Hero parallax + fade transition */
+      const updateHero = (scrollY) => {
+        if (reduced) return;
+        const y = scrollY ?? (lenis ? lenis.scroll : window.scrollY);
+        const h = hero.offsetHeight || window.innerHeight;
+        const p = clamp(y / h, 0, 1);
+        if (heroMedia) {
+          const scale = lerp(1.12, 1.28, p);
+          const ty = y * 0.42;
+          heroMedia.style.transform = `translate3d(0, ${ty}px, 0) scale(${scale})`;
         }
-      }
+        if (heroShade) heroShade.style.opacity = String(lerp(1, 0.55, p));
+        if (heroContent) {
+          heroContent.style.transform = `translate3d(0, ${y * 0.22}px, 0)`;
+          heroContent.style.opacity = String(lerp(1, 0, clamp((p - 0.15) / 0.55, 0, 1)));
+        }
+      };
 
-      if (sigImg) {
-        var sticky = sigImg.parentElement.getBoundingClientRect();
-        var sp = clamp((vh - sticky.top) / (vh + sticky.height), 0, 1);
-        sigImg.style.transform = "scale(1.06) translate3d(0," + lerp(0, -28, sp).toFixed(2) + "px,0)";
-      }
-
-      if (ingBg) {
-        var ib = ingBg.parentElement.getBoundingClientRect();
-        var ip = clamp((vh - ib.top) / (vh + ib.height), 0, 1);
-        ingBg.style.transform = "translate3d(0," + lerp(-48, 48, ip).toFixed(2) + "px,0)";
-      }
-
-      document.querySelectorAll("[data-parallax-img]").forEach(function (img) {
-        var card = img.closest(".ritual-card");
-        if (!card) return;
-        var r = card.getBoundingClientRect();
-        var p = clamp((vh - r.top) / (vh + r.height), 0, 1);
-        img.style.transform = "scale(1.08) translate3d(0," + lerp(20, -30, p).toFixed(2) + "px,0)";
-      });
-
-      /* Footer wordmark parallax (shift wrapper — keeps enter/exit CSS free) */
-      if (footerMarkShift && footerMark && !reduced) {
-        var mr = footerMark.getBoundingClientRect();
+      const updateFooterMark = () => {
+        if (reduced || !footerMarkShift || !footerMark) return;
+        const vh = window.innerHeight;
+        const mr = footerMark.getBoundingClientRect();
         if (mr.bottom > 0 && mr.top < vh) {
-          var mp = clamp((vh - mr.top) / (vh + mr.height), 0, 1);
-          footerMarkShift.style.transform =
-            "translate3d(0," + lerp(24, -16, mp).toFixed(2) + "px,0)";
+          const mp = clamp((vh - mr.top) / (vh + mr.height), 0, 1);
+          footerMarkShift.style.transform = `translate3d(0, ${lerp(28, -18, mp).toFixed(2)}px, 0)`;
         }
-      }
+      };
 
-      if (wordSpans.length && !reduced) {
-        var box = revealEl.getBoundingClientRect();
-        var raw = (vh * 0.78 - box.top) / (vh * 0.5);
-        var active = clamp(raw, 0, 1) * wordSpans.length;
-        for (var i = 0; i < wordSpans.length; i++) {
-          var s = wordSpans[i];
-          s.classList.remove("is-on", "is-mid");
-          if (i < active - 0.6) s.classList.add("is-on");
-          else if (i < active) s.classList.add("is-mid");
-        }
-      }
+      const onScroll = (e) => {
+        const y = e?.scroll ?? (lenis ? lenis.scroll : window.scrollY);
+        setNav(y);
+        updateHero(y);
+        updateFooterMark();
+      };
 
-      /* Fade in on scroll-in, fade out on scroll-out */
-      document.querySelectorAll(".reveal, .pcard, .tile, .article, .ritual-card").forEach(function (el) {
-        if (el.classList.contains("is-hidden")) return;
-        var r = el.getBoundingClientRect();
-        var exitTop = vh * 0.06;
-        /* Any intersection with the viewport counts — needed for end-of-page items */
-        var inView = r.bottom > exitTop && r.top < vh;
+      setNav();
+      updateHero(0);
+      updateFooterMark();
+      if (lenis) lenis.on("scroll", onScroll);
+      else window.addEventListener("scroll", () => onScroll(), { passive: true });
 
-        if (inView) {
-          el.classList.add("is-in");
-          el.classList.remove("is-out");
-        } else if (r.bottom <= exitTop) {
-          /* Left through the top — fade out upward */
-          if (el.classList.contains("is-in") || el.classList.contains("is-out")) {
-            el.classList.remove("is-in");
-            el.classList.add("is-out");
-          }
-        } else {
-          /* Still below viewport — reset for next enter from below */
-          el.classList.remove("is-in", "is-out");
-        }
-      });
+      const openDrawer = () => {
+        drawer.hidden = false;
+        drawer.classList.add("is-visible");
+        requestAnimationFrame(() => drawer.classList.add("is-open"));
+        document.body.style.overflow = "hidden";
+        if (lenis) lenis.stop();
+      };
+      const closeDrawer = () => {
+        drawer.classList.remove("is-open");
+        document.body.style.overflow = "";
+        if (lenis) lenis.start();
+        setTimeout(() => {
+          drawer.classList.remove("is-visible");
+          drawer.hidden = true;
+        }, 400);
+      };
+      openBtn.addEventListener("click", openDrawer);
+      closeBtn.addEventListener("click", closeDrawer);
+      drawer.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeDrawer));
 
-      /* Odometer — run when proof enters, reset when fully left */
-      var proof = document.getElementById("proof");
-      if (proof) {
-        var pr = proof.getBoundingClientRect();
-        var proofVisible = pr.top < vh * 0.75 && pr.bottom > vh * 0.15;
-        if (proofVisible && !counted) {
-          counted = true;
-          document.querySelectorAll("[data-count]").forEach(function (el) {
-            var target = parseFloat(el.getAttribute("data-count"));
-            var suffix = el.getAttribute("data-suffix") || "";
-            var start = performance.now();
-            var dur = 1600;
-            function tick(now) {
-              var t = clamp((now - start) / dur, 0, 1);
-              var eased = 1 - Math.pow(1 - t, 3);
-              el.textContent = Math.round(target * eased) + suffix;
-              if (t < 1) requestAnimationFrame(tick);
-            }
-            if (!reduced) requestAnimationFrame(tick);
-            else el.textContent = target + suffix;
-          });
-        } else if (!proofVisible && counted && (pr.bottom < 0 || pr.top > vh)) {
-          counted = false;
-          document.querySelectorAll("[data-count]").forEach(function (el) {
-            el.textContent = "0" + (el.getAttribute("data-suffix") || "");
-          });
-        }
-      }
-
-      ticking = false;
-    }
-
-    function onScroll() {
-      if (!ticking) { ticking = true; requestAnimationFrame(updateScroll); }
-    }
-
-    if (lenis) {
-      lenis.on("scroll", onScroll);
-    } else {
-      window.addEventListener("scroll", onScroll, { passive: true });
-    }
-    /* resize handled with fitFooterMark above */
-    updateScroll();
-
-    /* Anchor links via Lenis */
-    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-      a.addEventListener("click", function (e) {
-        var id = a.getAttribute("href");
-        if (!id || id === "#") return;
-        var target = document.querySelector(id);
-        if (!target) return;
-        e.preventDefault();
-        if (lenis) lenis.scrollTo(target, { offset: -20 });
-        else target.scrollIntoView({ behavior: "smooth" });
-      });
-    });
-
-    /* Collection row click */
-    document.querySelectorAll(".index-table tbody tr").forEach(function (tr) {
-      tr.addEventListener("click", function () {
-        var href = tr.getAttribute("data-href");
-        if (href) window.location.href = href;
-      });
-    });
-
-    /* Bestsellers filter */
-    var filters = document.getElementById("filters");
-    if (filters) {
-      filters.addEventListener("click", function (e) {
-        var btn = e.target.closest(".filter-tab");
-        if (!btn) return;
-        filters.querySelectorAll(".filter-tab").forEach(function (b) { b.classList.remove("is-active"); });
-        btn.classList.add("is-active");
-        var f = btn.getAttribute("data-filter");
-        document.querySelectorAll("#productsGrid .pcard").forEach(function (card) {
-          var show = f === "all" || card.getAttribute("data-cat") === f;
-          card.classList.toggle("is-hidden", !show);
-          if (show) card.classList.add("is-in");
+      /* Anchor links via Lenis */
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const id = a.getAttribute("href");
+          if (!id || id === "#") return;
+          const target = document.querySelector(id);
+          if (!target) return;
+          e.preventDefault();
+          if (lenis) lenis.scrollTo(target, { offset: -20 });
+          else target.scrollIntoView({ behavior: "smooth" });
         });
       });
-    }
-  })();
+
+      // Videos fade in over stills once ready
+      document.querySelectorAll(".hero__media video, .about__media video, .step--media video").forEach((vid) => {
+        const show = () => vid.classList.add("is-ready");
+        if (vid.readyState >= 2) show();
+        else vid.addEventListener("loadeddata", show, { once: true });
+        vid.addEventListener("error", () => { vid.style.display = "none"; });
+      });
+
+      /* Process media play / pause */
+      document.querySelectorAll("[data-video-toggle]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const card = btn.closest(".step--media");
+          const vid = card?.querySelector("video");
+          if (!vid) return;
+          if (vid.paused) {
+            vid.play();
+            btn.classList.remove("is-paused");
+            btn.setAttribute("aria-label", "Pause video");
+          } else {
+            vid.pause();
+            btn.classList.add("is-paused");
+            btn.setAttribute("aria-label", "Play video");
+          }
+        });
+      });
+
+      // Reveal on scroll — every .reveal (cards included as fallback)
+      const reveals = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.01, rootMargin: "0px 0px -8% 0px" });
+      reveals.forEach((el) => io.observe(el));
+
+      /* Staggered slow grid pop-ups (tall grids: threshold 0 so they always fire) */
+      const popGrids = [
+        { sel: ".t-grid", child: ".t-card" },
+        { sel: ".products__grid", child: ".pcard" },
+        { sel: ".process__grid", child: ".step" },
+        { sel: ".blog__grid", child: ".article" }
+      ];
+      popGrids.forEach(({ sel, child }) => {
+        const grid = document.querySelector(sel);
+        if (!grid) return;
+        const revealGrid = () => {
+          grid.classList.add("is-pop");
+          grid.querySelectorAll(child).forEach((card) => card.classList.add("is-in"));
+        };
+        const gridIo = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            revealGrid();
+            gridIo.unobserve(e.target);
+          });
+        }, { threshold: 0, rootMargin: "0px 0px -10% 0px" });
+        gridIo.observe(grid);
+        /* If already in view on load / after layout */
+        requestAnimationFrame(() => {
+          const r = grid.getBoundingClientRect();
+          const vh = window.innerHeight;
+          if (r.top < vh * 0.92 && r.bottom > vh * 0.08) {
+            revealGrid();
+            gridIo.unobserve(grid);
+          }
+        });
+      });
+
+      /* Stat number roll-up on scroll in */
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+      const animateCount = (el) => {
+        const end = parseFloat(el.getAttribute("data-count")) || 0;
+        const suffix = el.getAttribute("data-suffix") || "";
+        const prefix = el.getAttribute("data-prefix") || "";
+        const duration = 1400;
+        if (reduced) {
+          el.textContent = prefix + end + suffix;
+          return;
+        }
+        const startTime = performance.now();
+        const tick = (now) => {
+          const t = clamp((now - startTime) / duration, 0, 1);
+          const value = Math.round(end * easeOutCubic(t));
+          el.textContent = prefix + value + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      const countEls = document.querySelectorAll("[data-count]");
+      const countIo = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          animateCount(e.target);
+          countIo.unobserve(e.target);
+        });
+      }, { threshold: 0.4 });
+      countEls.forEach((el) => countIo.observe(el));
+
+      // FAQ
+      document.querySelectorAll(".faq__q").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const item = btn.parentElement;
+          const open = item.classList.contains("is-open");
+          document.querySelectorAll(".faq__item").forEach((i) => i.classList.remove("is-open"));
+          if (!open) item.classList.add("is-open");
+        });
+      });
+
+      // Before / After slider
+      const ba = document.getElementById("ba");
+      const after = document.getElementById("baAfter");
+      const handle = document.getElementById("baHandle");
+      let dragging = false;
+
+      const setPos = (clientX) => {
+        const rect = ba.getBoundingClientRect();
+        let pct = ((clientX - rect.left) / rect.width) * 100;
+        pct = Math.max(4, Math.min(96, pct));
+        after.style.clipPath = `inset(0 0 0 ${pct}%)`;
+        handle.style.left = pct + "%";
+        ba.setAttribute("aria-valuenow", Math.round(pct));
+      };
+
+      const start = (e) => { dragging = true; setPos(e.touches ? e.touches[0].clientX : e.clientX); };
+      const move = (e) => { if (!dragging) return; setPos(e.touches ? e.touches[0].clientX : e.clientX); };
+      const end = () => { dragging = false; };
+
+      ba.addEventListener("mousedown", start);
+      ba.addEventListener("touchstart", start, { passive: true });
+      window.addEventListener("mousemove", move);
+      window.addEventListener("touchmove", move, { passive: true });
+      window.addEventListener("mouseup", end);
+      window.addEventListener("touchend", end);
+    })();
   </script>
 </body>
 </html>
