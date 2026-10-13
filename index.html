@@ -351,26 +351,180 @@
       font-weight: 600;
     }
 
-    /* SERVICES */
-    .service {
-      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 4vw, 56px);
-      align-items: center; margin-bottom: clamp(40px, 6vw, 72px);
+    /* SERVICES — vertical stacked card swipe */
+    .services-hs {
+      position: relative;
+      background:
+        radial-gradient(ellipse 80% 60% at 12% 35%, rgba(255,255,255,.55), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 88% 75%, rgba(10,10,10,.04), transparent 50%),
+        var(--cream);
     }
-    .service:last-child { margin-bottom: 0; }
-    .service--flip { grid-template-columns: 0.95fr 1.05fr; }
-    .service--flip .service__media { order: 2; }
-    .service__media {
-      border-radius: var(--radius); overflow: hidden; aspect-ratio: 5/4;
+    .services-hs__pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(14px, 2vw, 24px);
+      padding: calc(var(--nav-h) + 8px) var(--pad) 22px;
+      overflow: hidden;
     }
-    .service__media img, .service__media video {
-      width: 100%; height: 100%; object-fit: cover;
+    .services-hs__intro {
+      flex-shrink: 0;
+      text-align: center;
+      max-width: var(--max);
+      margin-inline: auto;
+      width: 100%;
     }
-    .service__title {
+    .services-hs__intro .section-title { margin-bottom: 0; }
+    .services-hs__stack {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      width: min(100%, 720px);
+      margin-inline: auto;
+      perspective: 1400px;
+    }
+    .services-hs__panel {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      isolation: isolate;
+      background: var(--ink);
+      color: var(--white);
+      transform-origin: center bottom;
+      will-change: transform, opacity;
+      box-shadow: 0 24px 60px rgba(10, 10, 10, 0.18);
+      backface-visibility: hidden;
+    }
+    .services-hs__media {
+      position: absolute;
+      inset: -10% 0;
+      z-index: 0;
+    }
+    .services-hs__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      filter: saturate(0.92) contrast(1.04);
+      will-change: transform;
+    }
+    .services-hs__shade {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,.06) 0%, rgba(10,10,10,.2) 45%, rgba(10,10,10,.82) 100%);
+      pointer-events: none;
+    }
+    .services-hs__copy {
+      position: absolute;
+      inset: auto 0 0;
+      z-index: 2;
+      padding: clamp(22px, 3.5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 34rem;
+    }
+    .services-hs__index {
+      font-family: "Staatliches", sans-serif;
+      font-size: clamp(18px, 2vw, 22px);
+      letter-spacing: 0.08em;
+      opacity: 0.72;
+      line-height: 1;
+    }
+    .services-hs__title {
       font-family: "Bricolage Grotesque", sans-serif;
-      font-size: clamp(26px, 3vw, 36px); font-weight: 600;
-      letter-spacing: -0.03em; margin-bottom: 14px;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
     }
-    .service__desc { font-size: 16px; line-height: 1.65; color: var(--ink-soft); max-width: 38ch; }
+    .services-hs__desc {
+      font-size: clamp(14px, 1.5vw, 17px);
+      line-height: 1.6;
+      color: rgba(255,255,255,.84);
+      max-width: 36ch;
+    }
+    .services-hs__meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,.7);
+    }
+    .services-hs__meta::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: rgba(255,255,255,.45);
+    }
+    .services-hs__foot {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(100%, 720px);
+      margin-inline: auto;
+    }
+    .services-hs__hint {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .services-hs__dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .services-hs__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: rgba(10,10,10,.18);
+      transition: width .35s cubic-bezier(.22,1,.36,1), background .3s ease;
+    }
+    .services-hs__dot.is-on {
+      width: 22px;
+      background: var(--ink);
+    }
+    .services-hs.is-static {
+      height: auto !important;
+    }
+    .services-hs.is-static .services-hs__pin {
+      position: relative;
+      height: auto;
+      overflow: visible;
+      padding: clamp(72px, 9vw, 112px) var(--pad);
+    }
+    .services-hs.is-static .services-hs__stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      height: auto;
+      perspective: none;
+    }
+    .services-hs.is-static .services-hs__panel {
+      position: relative;
+      inset: auto;
+      aspect-ratio: 4 / 5;
+      transform: none !important;
+      opacity: 1 !important;
+      box-shadow: 0 12px 36px rgba(10,10,10,.1);
+    }
+    .services-hs.is-static .services-hs__media img {
+      transform: none !important;
+    }
+    .services-hs.is-static .services-hs__dots { display: none; }
 
     /* RESULTS */
     .results { background: var(--ink); color: var(--white); }
@@ -884,16 +1038,13 @@
       transform: translate3d(0, -4px, 0) scale(1);
     }
 
-    /* FAQ + services stagger */
+    /* FAQ stagger */
     .faq .faq__item.reveal.is-in:nth-child(1) { transition-delay: .04s; }
     .faq .faq__item.reveal.is-in:nth-child(2) { transition-delay: .12s; }
     .faq .faq__item.reveal.is-in:nth-child(3) { transition-delay: .2s; }
     .faq .faq__item.reveal.is-in:nth-child(4) { transition-delay: .28s; }
     .faq .faq__item.reveal.is-in:nth-child(5) { transition-delay: .36s; }
     .faq .faq__item.reveal.is-in:nth-child(6) { transition-delay: .44s; }
-    .service.reveal.is-in:nth-of-type(1) { transition-delay: .06s; }
-    .service.reveal.is-in:nth-of-type(2) { transition-delay: .18s; }
-    .service.reveal.is-in:nth-of-type(3) { transition-delay: .3s; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -914,8 +1065,8 @@
       .about__media { border-radius: 16px; aspect-ratio: 4 / 3; }
       .about__stats { gap: 8px; padding: 18px 14px 20px; }
       .products__grid, .blog__grid { grid-template-columns: 1fr 1fr; }
-      .service, .service--flip { grid-template-columns: 1fr; }
-      .service--flip .service__media { order: 0; }
+      .services-hs__pin { gap: 12px; padding-bottom: 16px; }
+      .services-hs__stack { width: min(100%, 560px); }
       .process__grid { grid-template-columns: 1fr 1fr; }
       .step, .step--media { min-height: 240px; }
       .t-grid { grid-template-columns: 1fr 1fr; }
@@ -1159,41 +1310,72 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="section" id="services">
-    <div class="wrap">
-      <p class="eyebrow reveal">Services</p>
-      <h2 class="section-title reveal">Skincare Services For Healthy Skin</h2>
+  <!-- SERVICES — vertical stacked card swipe -->
+  <section class="services-hs" id="services" aria-label="Services">
+    <div class="services-hs__pin">
+      <div class="services-hs__intro">
+        <p class="eyebrow reveal">Services</p>
+        <h2 class="section-title reveal">Skincare Services For Healthy Skin</h2>
+      </div>
 
-      <article class="service reveal">
-        <div class="service__media">
-          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80" alt="Deep cleansing care" loading="lazy" width="1200" height="960" />
-        </div>
-        <div>
-          <h3 class="service__title">Deep Cleansing Care</h3>
-          <p class="service__desc">Removes dirt, oil, and impurities to give your skin a fresh, clean, and healthy glow — without stripping the barrier.</p>
-        </div>
-      </article>
+      <div class="services-hs__stack" id="servicesStack">
+        <article class="services-hs__panel">
+          <div class="services-hs__media">
+            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1400&q=80" alt="Deep cleansing care" loading="lazy" width="1400" height="1750" data-parallax />
+          </div>
+          <div class="services-hs__shade" aria-hidden="true"></div>
+          <div class="services-hs__copy">
+            <span class="services-hs__index">01</span>
+            <h3 class="services-hs__title">Deep Cleansing Care</h3>
+            <p class="services-hs__desc">Removes dirt, oil, and impurities for a fresh, clean glow — without stripping the barrier.</p>
+            <div class="services-hs__meta">Barrier-safe · Everyday ritual</div>
+          </div>
+        </article>
 
-      <article class="service service--flip reveal">
-        <div class="service__media">
-          <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1200&q=80" alt="Hydration therapy" loading="lazy" width="1200" height="960" />
-        </div>
-        <div>
-          <h3 class="service__title">Hydration Therapy</h3>
-          <p class="service__desc">Deeply hydrates and nourishes your skin, keeping it soft, smooth, and naturally glowing through Indian weather.</p>
-        </div>
-      </article>
+        <article class="services-hs__panel">
+          <div class="services-hs__media">
+            <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1400&q=80" alt="Hydration therapy" loading="lazy" width="1400" height="1750" data-parallax />
+          </div>
+          <div class="services-hs__shade" aria-hidden="true"></div>
+          <div class="services-hs__copy">
+            <span class="services-hs__index">02</span>
+            <h3 class="services-hs__title">Hydration Therapy</h3>
+            <p class="services-hs__desc">Deeply nourishes skin so it stays soft, smooth, and naturally glowing through Indian weather.</p>
+            <div class="services-hs__meta">Moisture lock · Soft finish</div>
+          </div>
+        </article>
 
-      <article class="service reveal">
-        <div class="service__media">
-          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80" alt="Sun protection care" loading="lazy" width="1200" height="960" />
-        </div>
-        <div>
-          <h3 class="service__title">Sun Protection Care</h3>
-          <p class="service__desc">Protects your skin from UV rays and helps prevent tanning, dark spots, and early aging with lightweight SPF gels.</p>
-        </div>
-      </article>
+        <article class="services-hs__panel">
+          <div class="services-hs__media">
+            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1400&q=80" alt="Sun protection care" loading="lazy" width="1400" height="1750" data-parallax />
+          </div>
+          <div class="services-hs__shade" aria-hidden="true"></div>
+          <div class="services-hs__copy">
+            <span class="services-hs__index">03</span>
+            <h3 class="services-hs__title">Sun Protection Care</h3>
+            <p class="services-hs__desc">Lightweight SPF defence against UV, tanning, dark spots, and early ageing — every morning.</p>
+            <div class="services-hs__meta">Daily SPF · City-ready</div>
+          </div>
+        </article>
+
+        <article class="services-hs__panel">
+          <div class="services-hs__media">
+            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1400&q=80" alt="Radiance routine" loading="lazy" width="1400" height="1750" data-parallax />
+          </div>
+          <div class="services-hs__shade" aria-hidden="true"></div>
+          <div class="services-hs__copy">
+            <span class="services-hs__index">04</span>
+            <h3 class="services-hs__title">Radiance Routine</h3>
+            <p class="services-hs__desc">A simple cleanse–treat–protect flow curated for real Indian skin, real climates, real results.</p>
+            <div class="services-hs__meta">Curated · Dermatologically tested</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="services-hs__foot">
+        <span class="services-hs__hint"><span id="servicesStep">01</span> / 04 · Swipe up</span>
+        <div class="services-hs__dots" id="servicesDots" aria-hidden="true"></div>
+      </div>
     </div>
   </section>
 
@@ -1576,6 +1758,7 @@
 
       /* Lenis smooth scroll */
       let lenis = null;
+      let servicesTick = null; /* set after services helpers exist */
       if (!reduced && typeof Lenis !== "undefined") {
         lenis = new Lenis({
           duration: 1.15,
@@ -1585,6 +1768,7 @@
         });
         function raf(time) {
           lenis.raf(time);
+          if (servicesTick) servicesTick();
           requestAnimationFrame(raf);
         }
         requestAnimationFrame(raf);
@@ -1593,6 +1777,118 @@
 
       const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
       const lerp = (a, b, t) => a + (b - a) * t;
+
+      /* Services — sticky stack, cards swipe up on scroll */
+      const servicesSec = document.getElementById("services");
+      const servicesStack = document.getElementById("servicesStack");
+      const servicesStep = document.getElementById("servicesStep");
+      const servicesDots = document.getElementById("servicesDots");
+      const servicesPanels = servicesStack
+        ? Array.from(servicesStack.querySelectorAll(".services-hs__panel"))
+        : [];
+      const servicesImgs = servicesStack
+        ? Array.from(servicesStack.querySelectorAll("[data-parallax]"))
+        : [];
+      const servicesCount = servicesPanels.length;
+      const servicesStatic = () => reduced;
+      let servicesActive = 0;
+
+      if (servicesDots && servicesCount) {
+        servicesDots.innerHTML = servicesPanels
+          .map((_, i) => `<span class="services-hs__dot${i === 0 ? " is-on" : ""}" data-i="${i}"></span>`)
+          .join("");
+      }
+
+      const layoutServices = () => {
+        if (!servicesSec || !servicesStack || !servicesCount) return;
+        if (servicesStatic()) {
+          servicesSec.classList.add("is-static");
+          servicesSec.style.height = "";
+          servicesPanels.forEach((p) => {
+            p.style.transform = "";
+            p.style.opacity = "";
+            p.style.zIndex = "";
+          });
+          servicesImgs.forEach((img) => { img.style.transform = ""; });
+          return;
+        }
+        servicesSec.classList.remove("is-static");
+        const pinH = window.innerHeight;
+        /* One viewport of travel per card swipe */
+        const travel = Math.round(pinH * 0.9 * Math.max(1, servicesCount - 1));
+        servicesSec.style.height = `${pinH + travel}px`;
+        updateServices();
+      };
+
+      const updateServices = () => {
+        if (!servicesSec || !servicesStack || servicesStatic() || !servicesCount) return;
+        const rect = servicesSec.getBoundingClientRect();
+        const pinH = window.innerHeight;
+        const total = Math.max(1, servicesSec.offsetHeight - pinH);
+        const scrolled = clamp(-rect.top, 0, total);
+        const progress = scrolled / total;
+        const active = progress * (servicesCount - 1);
+        const current = Math.round(clamp(active, 0, servicesCount - 1));
+
+        if (current !== servicesActive) {
+          servicesActive = current;
+          if (servicesStep) {
+            servicesStep.textContent = String(current + 1).padStart(2, "0");
+          }
+          if (servicesDots) {
+            servicesDots.querySelectorAll(".services-hs__dot").forEach((dot, i) => {
+              dot.classList.toggle("is-on", i === current);
+            });
+          }
+        }
+
+        servicesPanels.forEach((panel, i) => {
+          const d = i - active;
+          let y = 0;
+          let scale = 1;
+          let opacity = 1;
+          let rotate = 0;
+          let z = servicesCount - i;
+
+          if (d < 0) {
+            /* Swiping / swiped upward */
+            const t = clamp(-d, 0, 1.15);
+            const ease = 1 - Math.pow(1 - Math.min(t, 1), 2.4);
+            y = -ease * 112;
+            rotate = -ease * 7;
+            opacity = 1 - ease * 0.95;
+            scale = 1 - ease * 0.04;
+            z = servicesCount + 2 + Math.floor(d);
+          } else {
+            /* Current + cards waiting in the stack */
+            const behind = Math.min(d, 3);
+            y = behind * 18;
+            scale = 1 - behind * 0.055;
+            opacity = behind > 2.2 ? 0 : 1;
+            rotate = behind * 0.6;
+            z = servicesCount - i;
+          }
+
+          panel.style.zIndex = String(Math.round(z + 10));
+          panel.style.opacity = opacity.toFixed(3);
+          panel.style.transform =
+            `translate3d(0, ${y.toFixed(2)}%, 0) scale(${scale.toFixed(4)}) rotate(${rotate.toFixed(2)}deg)`;
+
+          const img = servicesImgs[i];
+          if (img) {
+            const parallaxY = d < 0 ? clamp(-d, 0, 1) * 8 : Math.min(d, 2) * -3;
+            img.style.transform = `translate3d(0, ${parallaxY.toFixed(2)}%, 0) scale(1.1)`;
+          }
+        });
+      };
+
+      /* Drive card swipe every Lenis frame while section is near viewport */
+      servicesTick = () => {
+        if (!servicesSec || servicesStatic()) return;
+        const r = servicesSec.getBoundingClientRect();
+        if (r.bottom < -40 || r.top > window.innerHeight + 40) return;
+        updateServices();
+      };
 
       const footerMark = document.getElementById("footerMark");
       const footerMarkText = document.getElementById("footerMarkText");
@@ -1615,7 +1911,6 @@
         footerMarkText.style.fontSize = next + "px";
       };
       fitFooterMark();
-      window.addEventListener("resize", fitFooterMark, { passive: true });
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitFooterMark);
 
       const setNav = (scrollY) => {
@@ -1658,11 +1953,24 @@
         setNav(y);
         updateHero(y);
         updateFooterMark();
+        updateServices();
       };
 
       setNav();
       updateHero(0);
       updateFooterMark();
+      layoutServices();
+      window.addEventListener("resize", () => {
+        layoutServices();
+        fitFooterMark();
+      }, { passive: true });
+      servicesImgs.forEach((img) => {
+        if (img.complete) return;
+        img.addEventListener("load", layoutServices, { once: true });
+      });
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(layoutServices);
+      }
       if (lenis) lenis.on("scroll", onScroll);
       else window.addEventListener("scroll", () => onScroll(), { passive: true });
 
